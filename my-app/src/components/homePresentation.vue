@@ -3,37 +3,23 @@
                     <b-card
                         no-body
                         style="max-width: 15rem;"
-                        img-src="https://placekitten.com/380/200"
+                        img-src="https://static.actu.fr/uploads/2019/10/hotel-magny-854x641.jpg"
                         img-alt="Image"
                         img-top
                     >
                         <template v-slot:header>
-                        <h4 class="mb-0">Hello World</h4>
+                        <h4 class="mb-0">Présentation</h4>
                         </template>
 
                         <b-card-body>
-                        <b-card-title>Card Title</b-card-title>
-                        <b-card-sub-title class="mb-2">Card Sub Title</b-card-sub-title>
                         <b-card-text>
-                            Some quick example text to build on the card title and make up the bulk of the card's
-                            content.
+                           C’est un lieu chargé d’histoire qui est sur le point de connaître une nouvelle vie.
+
+Mercredi 25 septembre, les esquisses du projet de réhabilitation de l’hôtel de Brière, implanté place de la Halle, à Magny-en-Vexin (Val-d’Oise), ont été présentées devant plus de soixante personnes réunies à la salle des fêtes.
+
+Le dossier sera piloté par les associations Magny-en-Vexin: une histoire qui se cultive et Terre et Vie, en concertation avec la municipalité. L’objectif est, à terme, d’y créer un centre d’information et de formation favorisant la transmission d’expertises dans le domaine de la restauration.
                         </b-card-text>
                         </b-card-body>
-
-                        <b-list-group flush>
-                        <b-list-group-item>Cras justo odio</b-list-group-item>
-                        <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-                        <b-list-group-item>Vestibulum at eros</b-list-group-item>
-                        </b-list-group>
-
-                        <b-card-body>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                        </b-card-body>
-
-                        <b-card-footer>This is a footer</b-card-footer>
-
-                        <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
                     </b-card>  
                 </div>  
 </template>
