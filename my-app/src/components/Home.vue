@@ -1,23 +1,24 @@
 <template>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-3">
-                <homePresentation />            
-            </div>
-            <div class="col-6 mt-5">
-                    <homeArticle />
-                    <homeArticle />      
-                    <homeArticle />
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <p>blablabla</p>
-                </div>
-                <div class="row">
-                    <p>blablabla</p>
-                </div>
-            </div>
-        </div>
+    <div class="mt-5">
+        <b-container>
+            <b-row>
+                <b-col lg="3" md="12" sm="12" class="mb-5">
+                    <homePresentation />            
+                </b-col>
+                <b-col lg="5" md="12" sm="12" class="my-5">
+                        <homeArticle />
+                        <homeArticle />      
+                        <homeArticle />
+                </b-col>
+                <b-col lg="3" md="12" sm="12" class="mb-5">
+                    <homeProvisoire /> 
+                    <homeProvisoire /> 
+                    <homeProvisoire /> 
+                    <homeProvisoire /> 
+                    <homeProvisoire /> 
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
@@ -25,18 +26,18 @@
 
 import homePresentation from "@/components/homePresentation.vue";
 import homeArticle from "@/components/homeArticle.vue";
-//import homeProvisoire from "@/components/homeProvisoire.vue";
+import homeProvisoire from "@/components/homeProvisoire.vue";
 
 
 export default {
     components: {
       homePresentation,
       homeArticle,
-      //homeProvisoire
+      homeProvisoire,
     }
 }
 </script>
 
 <style scoped>
-
+    
 </style>
