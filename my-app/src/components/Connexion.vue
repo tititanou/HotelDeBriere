@@ -6,9 +6,9 @@
                     <div v-if="error" class="alert alert-danger">{{error}}</div>
                         <label class="col-4" for="email">Email:</label>
                         <input type="email" id="email" name="email" class="form-control  col-8 " required v-model="form.email" placeholder="Votre adresse mail">
-                        <label class="col-4" for="password">Mot de passe:</label>
+                        <label class="mt-3 col-4" for="password">Mot de passe:</label>
                         <input type="password" id="password" name="password" class="form-control  col-8 " required v-model="form.password" placeholder="Choisissez votre mot de passe">
-                        <b-button type="submit" @click="connexion" variant="primary">Se connecter</b-button>
+                        <b-button class="mt-3" type="submit" @click="connexion" variant="primary">Se connecter</b-button>
                 </b-card-text>
             </b-card>
         </b-card-group>
