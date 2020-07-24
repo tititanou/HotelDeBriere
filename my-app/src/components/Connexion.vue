@@ -1,31 +1,49 @@
 <template>
-    <div class="container w-75  mt-5 mb-5">
-        <form>
-            <div class="column">
-                <div class="col mt-3">
-                    <div class="row">
+    <div>
+        <b-card-group deck>
+            <b-card title="Formulaire de connexion" class="mb-3">
+                <b-card-text>
+                    <div v-if="error" class="alert alert-danger">{{error}}</div>
                         <label class="col-4" for="email">Email:</label>
-                        <input type="email" id="email" class="form-control  col-8 " placeholder="Votre adresse mail">
-                    </div>
-                </div>
-                <div class="col mt-3">
-                    <div class="row">
+                        <input type="email" id="email" name="email" class="form-control  col-8 " required v-model="form.email" placeholder="Votre adresse mail">
                         <label class="col-4" for="password">Mot de passe:</label>
-                        <input type="password" id="password" class="form-control  col-8 " placeholder="Votre mot de passe">
-                    </div>
-                </div>
-                <div class="col-12  ">
-                    <button type="button" class="btn btn-danger w-100 text-center p-2 mt-5 mb-5">ENVOYER</button>
-                </div>
-
-
-            </div>
-        </form>
+                        <input type="password" id="password" name="password" class="form-control  col-8 " required v-model="form.password" placeholder="Choisissez votre mot de passe">
+                        <b-button type="submit" @click="connexion" variant="primary">Se connecter</b-button>
+                </b-card-text>
+            </b-card>
+        </b-card-group>
     </div>
 </template>
 
 <script>
-
+import firebase from "firebase";
+export default{
+    name: 'connexion',
+    data() {
+        return {
+            form: {
+                email: "",
+                password: "",
+            },
+            error: null
+        };
+    },
+    methods: {
+        alert(){
+            return alert("Vous êtes connecté.")
+        },
+        connexion() {
+            console.log(this.form.email, this.form.password);
+            firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
+            .then(()=>{
+                this.alert()
+            })
+            .catch(function(err) {
+                this.data.error = err.message;
+            });
+        },
+    },
+}
 </script>
 
 <style scoped>

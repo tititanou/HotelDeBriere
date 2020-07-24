@@ -2,7 +2,7 @@
 <header>
   <div>
   <b-navbar class="shadow p-3 mb-5" toggleable="xl" type="dark" variant="info">
-    <b-navbar-brand href="#">HOTEL DE BRIERE</b-navbar-brand>
+    <b-navbar-brand><router-link :to="{ name: 'home' }">HOTEL DE BRIERE</router-link></b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
