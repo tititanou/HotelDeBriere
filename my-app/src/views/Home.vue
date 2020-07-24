@@ -11,7 +11,7 @@
                         <homeArticle />
                 </b-col>
                 <b-col lg="3" md="12" sm="12" class="mb-5 mx-auto">
-                    <homeProvisoire /> 
+                    <inscription />
                     <homeProvisoire /> 
                     <homeProvisoire /> 
                     <homeProvisoire /> 
@@ -27,13 +27,13 @@
 import homePresentation from "@/components/homePresentation.vue";
 import homeArticle from "@/components/homeArticle.vue";
 import homeProvisoire from "@/components/homeProvisoire.vue";
-
-
+import inscription from "@/components/Inscription.vue";
 export default {
     components: {
       homePresentation,
       homeArticle,
       homeProvisoire,
+      inscription
     }
 }
 </script>

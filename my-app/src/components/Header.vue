@@ -1,6 +1,7 @@
 <template>
+<header>
   <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
+  <b-navbar class="shadow p-3 mb-5" toggleable="xl" type="dark" variant="info">
     <b-navbar-brand href="#">HOTEL DE BRIERE</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -40,17 +41,17 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item><router-link :to="{ name: 'inscriptionConnexion' }">Sign In</router-link></b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </div>
+</header>
 </template>
 
 
 <script>
-
 </script>
 
 <style scoped>
