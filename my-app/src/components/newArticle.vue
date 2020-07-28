@@ -85,12 +85,13 @@
             :img-src="form.picture"
             img-alt="Image"
             img-top
+            img-width="max-whidth: 50rem"
+            img-height="max-height: 50rem"
             tag="article"
             style="max-width: 50rem;"
             class="mb-4"
         >
             <b-card-text>
-                
                 {{form.resume}}
             </b-card-text>
 
@@ -99,6 +100,24 @@
         </div>
         <div>
             <h2>Page Complète:</h2> 
+            <b-card
+            :img-src="form.picture"
+            img-alt="Image"
+            img-top
+            tag="article"
+            class="mb-4"
+            >
+            <h1>{{form.title}}</h1>
+            <h3>{{form.subtitle}}</h3>
+            <div class="row">
+                <div class="col">{{form.releaseDate}}</div> 
+                <div class="col">{{form.autor}}</div>  
+                <div class="col">{{form.category}}</div>
+            </div>
+            
+            <b-card-text v-html="form.content"></b-card-text>
+
+            </b-card>
         </div>
     </div>
 </b-container>
