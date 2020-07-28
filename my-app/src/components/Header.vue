@@ -2,7 +2,7 @@
 <header>
   <div>
   <b-navbar class="shadow p-3 mb-5" toggleable="xl" type="dark" variant="info">
-    <b-navbar-brand><router-link :to="{ name: 'home' }">HOTEL DE BRIERE</router-link></b-navbar-brand>
+    <b-navbar-brand href="/">HOTEL DE BRIERE</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -23,6 +23,7 @@
         <b-nav-item href="#">Evenements</b-nav-item>
         <b-nav-item href="#">On en parle</b-nav-item>
         <b-nav-item href="#">Ressources</b-nav-item>
+        <b-nav-item href="newArticle">NewArticle</b-nav-item>
         
 
       </b-navbar-nav>
@@ -41,7 +42,7 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item><router-link :to="{ name: 'inscriptionConnexion' }">Sign In</router-link></b-dropdown-item>
+          <b-dropdown-item href="inscriptionConnexion">Sign In</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -55,5 +56,3 @@
 </script>
 
 <style scoped>
-
-</style>

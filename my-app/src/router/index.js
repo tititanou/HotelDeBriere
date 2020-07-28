@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from "@/views/Home";
 import InscriptionConnexion from "@/views/InscriptionConnexion";
 import PageErreur from "@/views/PageErreur";
+import NewArticle from "@/views/NewArticle";
 import AjoutArticle from "@/views/Article";
 import ArticlesList from "@/views/ArticlesList";
 
@@ -40,7 +41,13 @@ export default new Router({
         {
             path: '*',
             redirect: { name: '404' }
-        }
+        },
+        {
+            path: '/newArticle',
+            name: 'newArticle',
+            component: NewArticle,
+        },
+        
     ]
 
 })
