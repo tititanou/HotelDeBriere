@@ -12,7 +12,7 @@
 
 
 <script>
-import Article from "@/components/Article.vue";
+import Article from "@/components/ArticlePresentation.vue";
 
 
 

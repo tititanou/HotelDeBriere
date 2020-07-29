@@ -7,6 +7,7 @@ import PageErreur from "@/views/PageErreur";
 import NewArticle from "@/views/NewArticle";
 import AjoutArticle from "@/views/Article";
 import ArticlesList from "@/views/ArticlesList";
+import ChoosenArticle from "@/views/ChoosenArticle";
 
 Vue.use(Router)
 
@@ -37,7 +38,12 @@ export default new Router({
             name: '404',
             component: PageErreur,
         },
-
+        {
+            path: '/article/:id',
+            name: 'completeArticle',
+            component: ChoosenArticle,
+            props: true
+        },
         {
             path: '*',
             redirect: { name: '404' }

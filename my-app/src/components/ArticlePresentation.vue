@@ -15,7 +15,8 @@
                     {{article.abstract}}
                 </b-card-text>
 
-                <b-button href="#" variant="primary">Lire la suite</b-button>
+                <router-link class="btn btn-primary" :to="{ name: 'completeArticle', params: { id: article.id } }">Lire la suite</router-link>
+
                 </b-card>
                 </div>
 </template>
