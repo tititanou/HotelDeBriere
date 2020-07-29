@@ -78,7 +78,7 @@
                 class="mb-4"
             >
                 <b-card-text>
-                    {{form.resume}}
+                    {{form.abstract}}
                 </b-card-text>
 
                 <b-button href="#" variant="primary">Lire la suite</b-button>

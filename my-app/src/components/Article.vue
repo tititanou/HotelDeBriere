@@ -5,19 +5,19 @@
                 :img-src="article.picture"
                 img-alt="Image"
                 img-top
-                img-width="max-whidth: 50rem"
+                img-width="max-width: 50rem"
                 img-height="max-height: 50rem"
                 tag="article"
-                style="max-width: 50rem;"
-                class="mb-4"
+                style="max-width: 45rem; min-width: 45rem; float:none;"
+                class="mb-4 center-block"
             >
                 <b-card-text>
-                    {{article.resume}}
+                    {{article.abstract}}
                 </b-card-text>
 
                 <b-button href="#" variant="primary">Lire la suite</b-button>
                 </b-card>
-    </div>
+                </div>
 </template>
 
 <script>
