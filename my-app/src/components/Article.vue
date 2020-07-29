@@ -1,17 +1,22 @@
 <template>
     <div class="row">
         <b-card
-            tag="article"
-            style="max-width: 50rem; min-width: 50rem"
-            class="mb-4"
-        >
-            <b-card-text>
-              <h1>{{article.titre}}</h1>
-              <p>{{article.resume}}</p>
-            </b-card-text>
+                :title="article.title"
+                :img-src="article.picture"
+                img-alt="Image"
+                img-top
+                img-width="max-whidth: 50rem"
+                img-height="max-height: 50rem"
+                tag="article"
+                style="max-width: 50rem;"
+                class="mb-4"
+            >
+                <b-card-text>
+                    {{article.resume}}
+                </b-card-text>
 
-            <b-button href="#" variant="primary">Lire la suite</b-button>
-        </b-card>
+                <b-button href="#" variant="primary">Lire la suite</b-button>
+                </b-card>
     </div>
 </template>
 

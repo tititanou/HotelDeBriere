@@ -14,40 +14,38 @@
                     <b-form-input id="input-2" v-model="form.subtitle" placeholder="Sous-titre"></b-form-input>
                 </b-form-group>
 
-                <b-form-group id="input-group-4" label="Résumé:" required label-for="input-4">
+                <b-form-group id="input-group-4" label="Résumé:" label-for="input-4">
                     <b-form-textarea id="textarea" v-model="form.abstract" placeholder="Enter something..." rows="3" max-rows="6"></b-form-textarea>
                 </b-form-group>
 
-                <b-form-group id="input-group-3" label="Contenu de l'article:" required label-for="input-3" >
+                <b-form-group id="input-group-3" label="Contenu de l'article:" label-for="input-3" >
                     <b-form>
-                        <vue-editor label="Contenu de l'article:" id="input-3" v-model="form.content"></vue-editor>
+                        <vue-editor label="Contenu de l'article:" id="input-3" required v-model="form.content"></vue-editor>
                     </b-form>
                 </b-form-group>
 
                 <b-form-group 
                     id="input-group-4" 
                     label="Date de mise en ligne:" 
-                    required
                     label-for="input-4"
                 >
-                    <b-form-datepicker id="input-4" v-model="form.releaseDate" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker id="input-4" v-model="form.releaseDate" required class="mb-2"></b-form-datepicker>
                 </b-form-group>
 
                 <b-form-group 
                     id="input-group-4" 
                     label="Categorie:" 
-                    required
                     label-for="input-4"
                 >
-                    <b-form-input list="input-list" id="input-with-list" v-model="form.category"></b-form-input>
+                    <b-form-input list="input-list" id="input-with-list" required v-model="form.category"></b-form-input>
                     <b-form-datalist id="input-list" :options="options"></b-form-datalist>
                 </b-form-group>
 
-                <b-form-group id="input-group-4" label="Auteur de l'article:" required label-for="input-4">
+                <b-form-group id="input-group-4" label="Auteur de l'article:" label-for="input-4">
                     <b-form-input id="input-1" v-model="form.autor" type="text" required placeholder="Auteur"></b-form-input>
                 </b-form-group>
 
-                <b-form-group id="input-group-4" label="Photo de présentation:" required label-for="input-4">
+                <b-form-group id="input-group-4" label="Photo de présentation:" label-for="input-4">
                    <b-form v-model="picture">
                        <div >
                             <input type="file" @change="previewImage" accept="image/*" >
@@ -57,7 +55,7 @@
                             <progress id="progress" :value="uploadValue" max="100" ></progress>  </p>
                         </div>
                         <div v-if="imageData!=null">
-                            <img class="preview" :src="form.picture">
+                            <img class="preview" required :src="form.picture">
                             <br>
                             <button @click.prevent="onUpload">Upload</button>
                         </div>
@@ -108,7 +106,7 @@
 
         </div>
     </div>
-    <b-button type="submit" @click.prevent="createArticle" variant="primary">Submit</b-button>
+    <b-button type="submit" variant="primary">Submit</b-button>
                 <b-button type="reset" variant="danger">Reset</b-button>
 
             </b-form>
@@ -153,8 +151,33 @@ export default {
     },
     methods: {
       onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        evt.preventDefault();
+        //alert(JSON.stringify(this.form))
+        if(this.form.abstract.length == 0){
+            alert("Vous devez écrire un résumé")
+        }
+        else if (this.form.content.length == 0){
+            alert("Vous devez écrire un article.")
+        }
+        else if (this.form.releaseDate.length == 0){
+            alert("Vous devez entrer une date.")
+        }
+        else if (this.form.picture.length == 0){
+            alert("Vous devez entrer une image.")
+        }
+        else{
+            console.log(this.form.content.length)
+            firebase.database().ref('articles/').push({
+                title: this.form.title,
+                subtitle: this.form.subtitle,
+                abstract: this.form.abstract,
+                content: this.form.content,
+                releaseDate: this.form.releaseDate,
+                autor: this.form.autor,
+                category: this.form.category,
+                picture: this.form.picture,
+            }).then(alert("Votre article a été créé avec succès."));
+        }
       },
       onReset(evt) {
         evt.preventDefault()
@@ -195,17 +218,7 @@ export default {
     createArticle(){
         //var user = firebase.auth().currentUser;
         //console.log(user.uid);
-        firebase.database().ref('articles/').push({
-            title: this.form.title,
-            subtitle: this.form.subtitle,
-            abstract: this.form.abstract,
-            content: this.form.content,
-            releaseDate: this.form.releaseDate,
-            autor: this.form.autor,
-            category: this.form.category,
-            picture: this.form.picture,
-        }).then(alert("Votre article a été créé avec succès."))
-        ;
+        
     }
 
     }
