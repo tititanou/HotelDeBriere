@@ -15,7 +15,7 @@
                 </b-form-group>
 
                 <b-form-group id="input-group-4" label="Résumé:" required label-for="input-4">
-                    <b-form-textarea id="textarea" v-model="form.resume" placeholder="Enter something..." rows="3" max-rows="6"></b-form-textarea>
+                    <b-form-textarea id="textarea" v-model="form.abstract" placeholder="Enter something..." rows="3" max-rows="6"></b-form-textarea>
                 </b-form-group>
 
                 <b-form-group id="input-group-3" label="Contenu de l'article:" required label-for="input-3" >
@@ -44,7 +44,7 @@
                 </b-form-group>
 
                 <b-form-group id="input-group-4" label="Auteur de l'article:" required label-for="input-4">
-                    <b-form-input id="input-1" v-model="form.autor" type="text" required placeholder="Titre"></b-form-input>
+                    <b-form-input id="input-1" v-model="form.autor" type="text" required placeholder="Auteur"></b-form-input>
                 </b-form-group>
 
                 <b-form-group id="input-group-4" label="Photo de présentation:" required label-for="input-4">
@@ -64,60 +64,59 @@
                    </b-form>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary">Submit</b-button>
+        <div class="mt-5">
+            <h1>Prévisualisation de l'article:</h1>
+            <div>
+                <h2>Vignette:</h2>
+                <b-card
+                :title="form.title"
+                :img-src="form.picture"
+                img-alt="Image"
+                img-top
+                img-width="max-whidth: 50rem"
+                img-height="max-height: 50rem"
+                tag="article"
+                style="max-width: 50rem;"
+                class="mb-4"
+            >
+                <b-card-text>
+                    {{form.resume}}
+                </b-card-text>
+
+                <b-button href="#" variant="primary">Lire la suite</b-button>
+                </b-card>
+            </div>
+            <div>
+                <h2>Page Complète:</h2> 
+                <b-card
+                :img-src="form.picture"
+                img-alt="Image"
+                img-top
+                tag="article"
+                class="mb-4"
+                >
+                <h1>{{form.title}}</h1>
+                <h3>{{form.subtitle}}</h3>
+                <div class="row">
+                    <div class="col">{{form.releaseDate}}</div> 
+                    <div class="col">{{form.autor}}</div>  
+                    <div class="col">{{form.category}}</div>
+                </div>
+                
+                <b-card-text v-html="form.content"></b-card-text>
+                </b-card>
+
+        </div>
+    </div>
+    <b-button type="submit" @click.prevent="createArticle" variant="primary">Submit</b-button>
                 <b-button type="reset" variant="danger">Reset</b-button>
 
             </b-form>
 
-
-            <b-card class="mt-3" header="Form Data Result">
+            <!--<b-card class="mt-3" header="Form Data Result">
                 <pre class="m-0">{{ form }}</pre>
                 <pre class="m-0">{{ picture }}</pre>
-            </b-card>
-        </div>
-    </div>
-    <div class="mt-5">
-        <h1>Prévisualisation de l'article:</h1>
-        <div>
-            <h2>Vignette:</h2>
-            <b-card
-            :title="form.title"
-            :img-src="form.picture"
-            img-alt="Image"
-            img-top
-            img-width="max-whidth: 50rem"
-            img-height="max-height: 50rem"
-            tag="article"
-            style="max-width: 50rem;"
-            class="mb-4"
-        >
-            <b-card-text>
-                {{form.resume}}
-            </b-card-text>
-
-            <b-button href="#" variant="primary">Lire la suite</b-button>
-            </b-card>
-        </div>
-        <div>
-            <h2>Page Complète:</h2> 
-            <b-card
-            :img-src="form.picture"
-            img-alt="Image"
-            img-top
-            tag="article"
-            class="mb-4"
-            >
-            <h1>{{form.title}}</h1>
-            <h3>{{form.subtitle}}</h3>
-            <div class="row">
-                <div class="col">{{form.releaseDate}}</div> 
-                <div class="col">{{form.autor}}</div>  
-                <div class="col">{{form.category}}</div>
-            </div>
-            
-            <b-card-text v-html="form.content"></b-card-text>
-
-            </b-card>
+            </b-card>-->
         </div>
     </div>
 </b-container>
@@ -127,9 +126,6 @@
 <script>
 import firebase from 'firebase';
 import { VueEditor } from "vue2-editor";
-//import firebase from "firebase";
-
-
 
 export default {
   components: {
@@ -144,7 +140,7 @@ export default {
         form: {
             title: '',
             subtitle: '',
-            resume:'',
+            abstract:'',
             content: '',
             releaseDate: '',
             autor: '',
@@ -165,7 +161,7 @@ export default {
         // Reset our form values
         this.form.title = ''
         this.form.subtitle = ''
-        this.form.resume = ''
+        this.form.abstract = ''
         this.form.content = ''
         this.form.releaseDate = ''
         this.form.autor = ''
@@ -193,8 +189,23 @@ export default {
         storageRef.snapshot.ref.getDownloadURL().then((url)=>{
           this.form.picture =url;
         });
-      }
-      );
+      });
+    },
+
+    createArticle(){
+        //var user = firebase.auth().currentUser;
+        //console.log(user.uid);
+        firebase.database().ref('articles/').push({
+            title: this.form.title,
+            subtitle: this.form.subtitle,
+            abstract: this.form.abstract,
+            content: this.form.content,
+            releaseDate: this.form.releaseDate,
+            autor: this.form.autor,
+            category: this.form.category,
+            picture: this.form.picture,
+        }).then(alert("Votre article a été créé avec succès."))
+        ;
     }
 
     }

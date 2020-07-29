@@ -78,9 +78,14 @@ export default new Vuex.Store({
                     console.log(childKey + " et " + childData.prix)
                     const article = {
                         id: childKey,
-                        titre: childData.titre,
-                        sousTitre: childData.sousTitre,
-                        resume: childData.resume
+                        title: childData.title,
+                        subtitle: childData.subtitle,
+                        abstract: childData.abstract,
+                        content: childData.content,
+                        releaseDate: childData.releaseDate,
+                        autor: childData.autor,
+                        category: childData.category,
+                        picture: childData.picture
                     }
                     commit('SET_ARTICLES', article)
 
