@@ -2,9 +2,9 @@
   <div>
 
       <Article
-       v-for="article in Listarticles"
-      :key="article.id"
-      :article="article"
+       v-for="articleI in articlesList"
+      :article="articleI" 
+      :key="articleI.id"
       />
     
   </div>
@@ -13,8 +13,7 @@
 
 <script>
 import Article from "@/components/ArticlePresentation.vue";
-
-
+import firebase from "firebase";
 
 export default {
  
@@ -23,21 +22,43 @@ export default {
   },
      data(){
         return {
-            Listarticles:[],
+            articlesList:[],
 
         }
      },
      created(){
-    this.Listarticles = this.$store.getters.articles
-  
+       this.articlesList = this.display();
+       console.log("le pb est ici!")
+       console.log("1: " + this.articlesList.length)
      },
-     mounted:function(){
-        this.display()
-        console.log("list" + this.Listarticles)
-      },
+     mounted: function(){
+       //this.articlesList = this.$store.getters.articles;
+     },
      methods:{
-       display(){         
-         this.$store.dispatch('displayArticles')
+       display(){ 
+         var list = [];        
+         let ref = firebase.database().ref('articles');
+            ref.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                    const article = {
+                        id: childKey,
+                        title: childData.title,
+                        subtitle: childData.subtitle,
+                        abstract: childData.abstract,
+                        content: childData.content,
+                        releaseDate: childData.releaseDate,
+                        autor: childData.autor,
+                        category: childData.category,
+                        picture: childData.picture
+                    }
+                    console.log(article);
+                    list.push(article);
+                });
+            });
+            console.log(list.length);
+            return list;
        }
      }
 };

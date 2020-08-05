@@ -69,13 +69,11 @@ export default new Vuex.Store({
         },
         displayArticles({ commit }) {
             //var titre;
-            var ref = firebase.database().ref('articles');
+            var ref = firebase.database().ref('articles').orderByChild('releaseDate');
             ref.once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
                     var childData = childSnapshot.val();
-                    // annonces.push(childData);
-                    console.log(childKey + " et " + childData.prix)
                     const article = {
                         id: childKey,
                         title: childData.title,

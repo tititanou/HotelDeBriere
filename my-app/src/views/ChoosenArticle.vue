@@ -19,16 +19,20 @@ export default {
   },
      data(){
         return {
-            articlesList:[],
-            article:"",
+          article:"",
+          articlesList: []
         }
      },
      created(){
-    this.articlesList = this.$store.getters.articles;
-    this.article = this.getArticle();
+      console.log("Y a t'il un pb ici?")
+      this.articlesList = this.$store.getters.articles;
+      console.log(this.articlesList)
+      this.article = this.getArticle();
      },
      mounted:function(){
+       console.log("ou là?")
         this.recupList();
+        //console.log("pk??" + this.id)
         this.getArticle();
       },
      methods:{
@@ -36,11 +40,14 @@ export default {
          this.$store.dispatch('displayArticles')
        },
        getArticle(){
+         console.log(this.articlesList.length)
            for (let i = 0; i < this.articlesList.length; i++){
                if(this.id == this.articlesList[i].id) {
                    this.article = this.articlesList[i];
                }
            }
+          //console.log("3: " + this.list.length)
+
        }
      }
 };
