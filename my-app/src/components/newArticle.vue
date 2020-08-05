@@ -15,7 +15,7 @@
                 </b-form-group>
 
                 <b-form-group id="input-group-4" label="Résumé:" label-for="input-4">
-                    <b-form-textarea id="textarea" v-model="form.abstract" placeholder="Enter something..." rows="3" max-rows="6"></b-form-textarea>
+                    <b-form-textarea id="textarea" v-model="form.abstract" placeholder="Résumé" rows="3" max-rows="6"></b-form-textarea>
                 </b-form-group>
 
                 <b-form-group id="input-group-3" label="Contenu de l'article:" label-for="input-3" >
@@ -62,6 +62,10 @@
                    </b-form>
                 </b-form-group>
 
+                <b-form-group label="Video de présentation" description="facultatif">
+                    <b-form-input id="input-1" v-model="form.video" type="text" placeholder="Lien vers une vidéo"></b-form-input>
+                </b-form-group>
+
         <div class="mt-5">
             <h1>Prévisualisation de l'article:</h1>
             <div>
@@ -86,23 +90,26 @@
             </div>
             <div>
                 <h2>Page Complète:</h2> 
-                <b-card
-                :img-src="form.picture"
-                img-alt="Image"
-                img-top
-                tag="article"
-                class="mb-4"
+                <div v-if="form.video"
+                class="mb-4 embed-responsive embed-responsive-16by9"
+
                 >
-                <h1>{{form.title}}</h1>
-                <h3>{{form.subtitle}}</h3>
+                <iframe class="col-12 embed-responsive-item" :src="form.video"  frameborder="0"></iframe>
+                </div>
+                <div v-else>
+                    <img :src="form.picture" class="col-12">
+                </div>
+                <div>
+                    <h1>{{form.title}}</h1>
+                    <h3>{{form.subtitle}}</h3>
                 <div class="row">
                     <div class="col">{{form.releaseDate}}</div> 
                     <div class="col">{{form.autor}}</div>  
                     <div class="col">{{form.category}}</div>
                 </div>
                 
-                <b-card-text v-html="form.content"></b-card-text>
-                </b-card>
+                <div v-html="form.content"></div>
+                </div>
 
         </div>
     </div>
@@ -144,6 +151,7 @@ export default {
             autor: '',
             category: '',
             picture: '',
+            video: '',
         },
         options: ['Apple', 'Banana', 'Grape', 'Kiwi', 'Orange'],
         show: true
@@ -153,11 +161,11 @@ export default {
       onSubmit(evt) {
         evt.preventDefault();
         //alert(JSON.stringify(this.form))
-        if(this.form.abstract.length == 0){
+        if(this.form.abstract.length == 0 || this.form.abstract.length > 280){
             alert("Vous devez écrire un résumé")
         }
         else if (this.form.content.length == 0){
-            alert("Vous devez écrire un article.")
+            alert("Vous devez écrire un article de 280 caractères maximum.")
         }
         else if (this.form.releaseDate.length == 0){
             alert("Vous devez entrer une date.")
@@ -176,6 +184,7 @@ export default {
                 autor: this.form.autor,
                 category: this.form.category,
                 picture: this.form.picture,
+                video: this.form.video,
             }).then(alert("Votre article a été créé avec succès."));
         }
       },
@@ -190,6 +199,7 @@ export default {
         this.form.autor = ''
         this.form.category = ''
         this.form.picture = ''
+        this.form.video = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {
