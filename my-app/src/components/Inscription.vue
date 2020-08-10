@@ -10,7 +10,7 @@
                         <input type="password" id="password" name="password" class="form-control  col-8 " required v-model="form.password" placeholder="Choisissez votre mot de passe">
                         <label class="mt-3 col-4" for="confirmPassword">Mot de passe:</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" class="form-control  col-8 " v-model="form.confirmPassword" placeholder="Confirmez votre mot de passe">
-                        <b-button class="mt-3" type="submit" @click="inscription" variant="primary">S'inscrire</b-button>
+                        <b-button class="mt-3" type="submit" @click="createAuth" variant="primary">S'inscrire</b-button>
                 </b-card-text>
                 
             </b-card>
@@ -33,6 +33,10 @@ export default{
         };
     },
     methods: {
+        createAuth(){
+            this.inscription();
+            this.userVerif();
+        },
         inscription() {
             console.log(this.form.email, this.form.password);
             firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
@@ -40,6 +44,14 @@ export default{
                 this.data.error = err.message;
             });
         },
+        userVerif(){
+             var user = firebase.auth().currentUser;
+            user.sendEmailVerification().then(function() {
+                alert("Veuillez confirmer votre mail en cliquant sur le lien qui vous a été envoyé.")
+            }).catch(function(error) {
+               alert("Une erreur s'est produite." + error.message)
+            });
+        } 
     },
 }
 </script>

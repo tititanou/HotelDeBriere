@@ -15,7 +15,7 @@
                     {{article.abstract}}
                 </b-card-text>
 
-                <router-link class="btn btn-primary" :to="{ name: 'completeArticle', params: { id: article.id }}">Lire la suite</router-link>
+                <router-link class="btn btn-primary" :to="{ name: 'completeArticle', params: { id: article.id, list: articlesList }}">Lire la suite</router-link>
 
                 </b-card>
                 </div>
@@ -26,6 +26,7 @@ export default {
 
   props: {
     article: Object,
+    articlesList: Array,
     },
   data() {
     return {

@@ -5,6 +5,7 @@
        v-for="articleI in articlesList"
       :article="articleI" 
       :key="articleI.id"
+      :articlesList="articlesList"
       />
     
   </div>

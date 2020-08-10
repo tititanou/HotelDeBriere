@@ -39,10 +39,11 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>
-            <em>User</em>
+            <em>Espace Perso</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="inscriptionConnexion">Sign In</b-dropdown-item>
+          <b-dropdown-item href="profil">Profil</b-dropdown-item>
+          <b-dropdown-item href="inscriptionConnexion">Se connecter</b-dropdown-item>
+          <b-dropdown-item v-on:click="signOutUser">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -53,6 +54,20 @@
 
 
 <script>
+import firebase from "firebase"
+export default{
+  methods:{
+
+    signOutUser(){
+      firebase.auth().signOut().then(function() {
+        alert("Vous êtes déconnecté. A bientôt");
+      }).catch(function(error) {
+        console.log(error.message)
+        alert("Une erreur s'est produite. Vous n'êtes pas déconnecté.");
+    });
+    }
+  }
+}
 </script>
 
 <style scoped>

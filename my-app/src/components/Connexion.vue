@@ -29,16 +29,14 @@ export default{
         };
     },
     methods: {
-        alert(){
-            return alert("Vous êtes connecté.")
-        },
         connexion() {
             console.log(this.form.email, this.form.password);
             firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
             .then(()=>{
-                this.alert()
+                alert("Vous êtes connecté.")
             })
             .catch(function(err) {
+                alert("Une erreur s'est produite")
                 this.data.error = err.message;
             });
         },

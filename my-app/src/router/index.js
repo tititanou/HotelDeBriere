@@ -5,7 +5,8 @@ import Home from "@/views/Home";
 import InscriptionConnexion from "@/views/InscriptionConnexion";
 import PageErreur from "@/views/PageErreur";
 import NewArticle from "@/views/NewArticle";
-import AjoutArticle from "@/views/Article";
+import Profile from "@/views/ProfilePage";
+import Admin from "@/views/Admin";
 import ArticlesList from "@/views/ArticlesList";
 import ChoosenArticle from "@/views/ChoosenArticle";
 
@@ -24,9 +25,14 @@ export default new Router({
             component: InscriptionConnexion
         },
         {
-            path: '/ajoutArticle',
-            name: 'ajoutArticle',
-            component: AjoutArticle
+            path: '/profil',
+            name: 'profile',
+            component: Profile
+        },
+        {
+            path: '/admin',
+            name: 'admin',
+            component: Admin
         },
         {
             path: '/articles',

@@ -10,6 +10,7 @@
 </div>
 </b-container> 
 </template>
+
 <script>
 import Connexion from "@/components/Connexion";
 import Inscription from "@/components/Inscription";
@@ -17,11 +18,11 @@ export default {
     props:{
           inscrit: Boolean
         },
-    data() {
-    },
     components:{
         Connexion,
         Inscription
+    },
+    data() {
     },
     methods: {
         changeDisplay(){
@@ -30,5 +31,4 @@ export default {
         }
     }
 }
-
 </script>
