@@ -27,56 +27,6 @@
 
 
 <script>
-//import Article from "@/components/CompleteArticle.vue";
-/*
-export default {
- props:['id'],
-  components: {
-    Article
-  },
-     data(){
-        return {
-          article:"",
-          articlesList: []
-        }
-     },
-     created(){
-      this.articlesList = this.$store.getters.articles;
-      this.recupList();
-      this.article = this.getArticle();
-      console.log("created: " + this.article)
-     },
-     updated:function(){
-        this.recupList();
-        this.getArticle();
-        console.log("mounted: " + this.article)
-      },
-      
-      mounted:function(){
-        this.$nextTick(function () {
-          this.recupList();
-          this.getArticle();
-        })
-      },
-     methods:{
-       recupList(){         
-         this.$store.dispatch('displayArticles')
-       },
-       getArticle(){
-         console.log(this.articlesList.length)
-           for (let i = 0; i < this.articlesList.length; i++){
-              console.log("0000")
-              console.log("loop longueur: " + this.articlesList.length)
-              console.log("loop id: " + this.id)
-               if(this.id == this.articlesList[i].id) {
-                 console.log("1234")
-                   this.article = this.articlesList[i];
-                   console.log("getArticle: " + this.article)
-               }
-           }
-       }
-     }
-};*/
 
 import firebase from "firebase";
 
@@ -94,15 +44,11 @@ export default {
        console.log(this)
        console.log(this.articlesId);
        this.display(this.articlesId, this.articleSelected);
-       //console.log(this.articleSelected)
      },
      mounted: function(){
-       //this.display(this.articlesId);
-       //this.display(this.articlesId);
      },
      methods:{
        display: function(id, list){ 
-         //list = [];
          let ref = firebase.database().ref('articles');
             ref.once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
@@ -130,7 +76,7 @@ export default {
             });
        },
        getIDfromURL: function(){
-        return window.location.pathname.split('/')[2];
+        return window.location.pathname.split('article')[1];
       }
        
      }

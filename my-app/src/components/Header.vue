@@ -1,7 +1,7 @@
 <template>
 <header>
   <div>
-  <b-navbar class="shadow p-3 mb-5" toggleable="xl" type="dark" variant="info">
+  <b-navbar class="shadow pt-5 mb-5" toggleable="xl" type="dark" variant="info">
     <b-navbar-brand href="/">HOTEL DE BRIERE</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -21,9 +21,9 @@
         <b-nav-item href="#">La phase d'amorçage</b-nav-item>
         <b-nav-item href="#">Le chantier</b-nav-item>
         <b-nav-item href="#">Evenements</b-nav-item>
-        <b-nav-item href="#">On en parle</b-nav-item>
+        <b-nav-item href="articles">On en parle</b-nav-item>
         <b-nav-item href="#">Ressources</b-nav-item>
-        <b-nav-item href="newArticle">NewArticle</b-nav-item>
+        <b-nav-item href="admin">Administration</b-nav-item>
         
 
       </b-navbar-nav>

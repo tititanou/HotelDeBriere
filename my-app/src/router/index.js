@@ -45,7 +45,7 @@ export default new Router({
             component: PageErreur,
         },
         {
-            path: '/article/:id',
+            path: '/article:id',
             name: 'completeArticle',
             component: ChoosenArticle,
             props: true
