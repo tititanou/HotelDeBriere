@@ -1,23 +1,26 @@
 <template>
-<b-container>
-    <b-card
-                :img-src="articleSelected[0].picture"
-                img-alt="Image"
-                img-top
-                tag="article"
-                class="mb-4"
-                >
-                <h1>{{articleSelected[0].title}}</h1>
-                <h3>{{articleSelected[0].subtitle}}</h3>
-                <div class="row">
-                    <div class="col">{{articleSelected[0].releaseDate}}</div> 
-                    <div class="col">{{articleSelected[0].autor}}</div>  
-                    <div class="col">{{articleSelected[0].category}}</div>
-                </div>
-                
-                <b-card-text v-html="articleSelected[0].content"></b-card-text>
-                </b-card>
+  <div>
+      <b-container>
+    <div v-if="articleSelected[0].video"
+        class="mb-4 embed-responsive embed-responsive-16by9">
+        <iframe class="col-12 embed-responsive-item" :src="articleSelected[0].video"  frameborder="0"></iframe>
+    </div>
+    <div v-else>
+        <img :src="articleSelected[0].picture" class="col-12">
+    </div>
+    <div>
+        <h1>{{articleSelected[0].title}}</h1>
+        <h3>{{articleSelected[0].subtitle}}</h3>
+    <div class="row">
+        <div class="col">{{articleSelected[0].releaseDate}}</div> 
+        <div class="col">{{articleSelected[0].autor}}</div>  
+        <div class="col">{{articleSelected[0].category}}</div>
+    </div>
+        
+        <div v-html="articleSelected[0].content"></div>
+    </div>
 </b-container>
+  </div>
 </template>
 
 
@@ -115,7 +118,8 @@ export default {
                         releaseDate: childData.releaseDate,
                         autor: childData.autor,
                         category: childData.category,
-                        picture: childData.picture
+                        picture: childData.picture,
+                        video: childData.video
                       }
                     if (childKey == id){
                       console.log(childKey);
