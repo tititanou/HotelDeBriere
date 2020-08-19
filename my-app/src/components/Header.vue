@@ -41,9 +41,9 @@
           <template v-slot:button-content>
             <em>Espace Perso</em>
           </template>
-          <b-dropdown-item href="profil">Profil</b-dropdown-item>
-          <b-dropdown-item href="inscriptionConnexion">Se connecter</b-dropdown-item>
-          <b-dropdown-item v-on:click="signOutUser">Déconnexion</b-dropdown-item>
+          <b-dropdown-item v-if="isConnected" href="profil">Profil</b-dropdown-item>
+          <b-dropdown-item v-if="!isConnected" href="inscriptionConnexion">Se connecter</b-dropdown-item>
+          <b-dropdown-item v-if="isConnected" v-on:click="signOutUser" href="/">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -56,8 +56,28 @@
 <script>
 import firebase from "firebase"
 export default{
+  data(){
+    return{
+      isConnected: false,
+      user:''
+    }
+  },
+  computed: { 
+    get: function(){
+      console.log("hello")
+      this.user = firebase.auth().currentUser;
+      if(this.user != null){
+        this.isConnected = true;
+      }
+    }
+  },
+  created(){
+    this.user = firebase.auth().currentUser;
+    if(this.user != null){
+      this.isConnected = true;
+    }
+  },
   methods:{
-
     signOutUser(){
       firebase.auth().signOut().then(function() {
         alert("Vous êtes déconnecté. A bientôt");
