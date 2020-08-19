@@ -30,10 +30,10 @@ export default{
     },
     methods: {
         connexion() {
-            console.log(this.form.email, this.form.password);
             firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
             .then(()=>{
                 alert("Vous êtes connecté.")
+                this.$router.replace({ name: "profile" })
             })
             .catch(function(err) {
                 alert("Une erreur s'est produite")

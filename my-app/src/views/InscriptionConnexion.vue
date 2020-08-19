@@ -15,14 +15,14 @@
 import Connexion from "@/components/Connexion";
 import Inscription from "@/components/Inscription";
 export default {
-    props:{
-          inscrit: Boolean
-        },
     components:{
         Connexion,
         Inscription
     },
     data() {
+        return{
+            inscrit: true
+        }
     },
     methods: {
         changeDisplay(){

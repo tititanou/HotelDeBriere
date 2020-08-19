@@ -20,7 +20,7 @@ export default new Vuex.Store({
             return state.user
         },
         loggedIn(state) {
-            return state.user.loggedIn
+            return state.user
         },
         articles(state) {
             return state.articles
@@ -60,7 +60,7 @@ export default new Vuex.Store({
             commit("SET_LOGGED_IN", user !== null);
             if (user) {
                 commit("SET_USER", {
-                    displayName: user.displayName,
+                    id: user.uid,
                     email: user.email
                 });
             } else {
