@@ -9,6 +9,8 @@ import Profile from "@/views/ProfilePage";
 import Admin from "@/views/Admin";
 import ArticlesList from "@/views/ArticlesList";
 import ChoosenArticle from "@/views/ChoosenArticle";
+import EditArticle from "@/views/EditArticle";
+import ModifyingArticle from "@/views/ModifyingArticle";
 import "firebase/auth";
 
 Vue.use(VueRouter)
@@ -58,6 +60,17 @@ const routes = [{
     name: 'newArticle',
     component: NewArticle,
 },
+{
+    path: '/editArticle',
+    name: 'editArticle',
+    component: EditArticle,
+},
+{
+    path: '/modifyingArticle:id',
+    name: 'modifyingArticle',
+    component: ModifyingArticle,
+    props: true
+}
 ]
 
 const router = new VueRouter({
