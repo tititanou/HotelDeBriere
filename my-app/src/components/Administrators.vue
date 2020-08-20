@@ -2,7 +2,7 @@
      <b-card title="Liste des administrateurs" style="max-width: 45rem; min-width: 45rem; float:none;" class="mb-4 center-block" v-if="isConnected && isAdmin">
         <b-list-group>
             <b-list-item v-for="admin in admins" :key="admin.id">
-                {{admin.firstname}} {{admin.name}}  <b-form-checkbox label="Administrateur" v-model="admin.admin" name="check-button" switch></b-form-checkbox>
+                {{admin.firstname}} {{admin.name}} <b-form-checkbox label="Administrateur" v-model="admin.admin" @change="updateAdmin(admin)" name="check-button" switch></b-form-checkbox>
             </b-list-item>
         </b-list-group>
     </b-card>
@@ -15,7 +15,7 @@
             <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
             <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
         </b-card>
-</template>
+</template> 
 <script>
 import firebase from "firebase";
 export default {
@@ -24,7 +24,8 @@ export default {
             admins:[],
             isConnected: false,
             isAdmin: false,
-            currentUser:''
+            currentUser:'',
+            adminState: false,
         }
     },
     created(){
@@ -67,12 +68,31 @@ export default {
                 let users = [];
                 Object.keys(data).forEach(key =>{
                     users.push({
+                        id: key,
                         firstname: data[key].firstname,
                         name: data[key].name,
-                        admin: data[key].admin
+                        admin: data[key].admin,
+                        email: data[key].email
                     });
                 });
                 viewUser.admins = users;
+            });
+        },
+        updateAdmin(us){
+            console.log(us.id)
+            firebase.database().ref('users/' + us.id).set({
+                firstname: us.firstname,
+                name: us.name,
+                email: us.email,
+                admin: !us.admin
+            }).then(() => {
+                if(us.admin == false){
+                    alert("L'utilisateur " + us.firstname + " " + us.name + " a maintenant le statut Administrateur.")
+                }
+                else{
+                    alert("L'utilisateur " + us.firstname + " " + us.name + " ne fait plus partie des administrateurs.")
+                }
+                //alert("Le statut de l'utilisateur " + us.firstname + " " + us.name + "a bien été modifié.")
             });
         }
     }
