@@ -51,7 +51,7 @@ export default {
                 firstname: this.form.firstname,
                 name: this.form.name,
                 email: userfb.email,
-                admin: false
+                admin: this.userslct.admin
             }).then(() => {
                 alert("Votre profil a été mis à jour.")
                 this.$router.replace({ name: "home" })

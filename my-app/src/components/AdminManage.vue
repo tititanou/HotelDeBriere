@@ -40,7 +40,7 @@
                     
                     <b-row class="my-1">
                         <b-card title="Gestion Utilisateurs">
-                            <b-button variant="outline-secondary" block href="#" size="lg">Gerer les administrateurs</b-button>
+                            <b-button variant="outline-secondary" block href="gestionAdmins" size="lg">Gerer les administrateurs</b-button>
                         </b-card>
                     </b-row>
                 </b-col>

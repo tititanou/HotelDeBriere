@@ -43,7 +43,7 @@
           </template>
           <b-dropdown-item v-if="isConnected" href="profil">Profil</b-dropdown-item>
           <b-dropdown-item v-if="!isConnected" href="inscriptionConnexion">Se connecter</b-dropdown-item>
-          <b-dropdown-item v-if="isConnected" v-on:click="signOutUser" href="/">Déconnexion</b-dropdown-item>
+          <b-dropdown-item v-on:click="signOutUser" href="/">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -62,7 +62,7 @@ export default{
       user:''
     }
   },
-  computed: { 
+  /*computed: { 
     get: function(){
       console.log("hello")
       this.user = firebase.auth().currentUser;
@@ -70,11 +70,12 @@ export default{
         this.isConnected = true;
       }
     }
-  },
+  },*/
   created(){
     this.user = firebase.auth().currentUser;
+    console.log(this.user)
     if(this.user != null){
-      this.isConnected = true;
+      return this.isConnected = true;
     }
   },
   methods:{

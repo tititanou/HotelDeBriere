@@ -7,6 +7,7 @@ import PageErreur from "@/views/PageErreur";
 import NewArticle from "@/views/NewArticle";
 import Profile from "@/views/ProfilePage";
 import Admin from "@/views/Admin";
+import AdminsManage from "@/views/AdminsList";
 import ArticlesList from "@/views/ArticlesList";
 import ChoosenArticle from "@/views/ChoosenArticle";
 import EditArticle from "@/views/EditArticle";
@@ -34,6 +35,11 @@ const routes = [{
     path: '/admin',
     name: 'admin', 
     component: Admin
+},
+{
+    path: '/gestionAdmins',
+    name: 'adminsManage', 
+    component: AdminsManage
 },
 {
     path: '/articles',
