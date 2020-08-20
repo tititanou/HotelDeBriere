@@ -1,14 +1,21 @@
 <template>
-  <div>
-
+  <b-container>
+    <div class="row my-5">
+      <h1>On en parle !</h1>
+    </div>
+    <div class="row" style="background-color: black;">
+    <input type="text" v-model="search" placeholder="Rechercher un article">
+    <b-button variant="primary" @click="searchArticleByText">Go</b-button>
+    </div>
+    <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1">
       <Article
        v-for="articleI in articlesList"
       :article="articleI" 
       :key="articleI.id"
       :articlesList="articlesList"
       />
-    
-  </div>
+    </b-row>
+  </b-container>
 </template>
 
 
@@ -24,7 +31,7 @@ export default {
      data(){
         return {
             articlesList:[],
-
+          search: "",
         }
      },
      created(){
@@ -36,6 +43,9 @@ export default {
        //this.articlesList = this.$store.getters.articles;
      },
      methods:{
+       searchArticleByText(){
+         console.log(this.search)
+       },
        display(){ 
          var list = [];        
          let ref = firebase.database().ref('articles');
@@ -46,12 +56,8 @@ export default {
                     const article = {
                         id: childKey,
                         title: childData.title,
-                        subtitle: childData.subtitle,
                         abstract: childData.abstract,
-                        content: childData.content,
                         releaseDate: childData.releaseDate,
-                        autor: childData.autor,
-                        category: childData.category,
                         picture: childData.picture
                     }
                     console.log(article);
