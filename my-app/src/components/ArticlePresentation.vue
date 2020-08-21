@@ -1,24 +1,14 @@
 <template>
-    <div class="row">
-        <b-card
-                :title="article.title"
-                :img-src="article.picture"
-                img-alt="Image"
-                img-top
-                img-width="max-width: 50rem"
-                img-height="max-height: 50rem"
-                tag="article"
-                style="max-width: 45rem; min-width: 45rem; float:none;"
-                class="mb-4 center-block"
-            >
-                <b-card-text>
-                    {{article.abstract}}
-                </b-card-text>
-
-                <router-link class="btn btn-primary" :to="{ name: 'completeArticle', params: { id: article.id, list: articlesList }}">Lire la suite</router-link>
-
-                </b-card>
-                </div>
+    <div class="col justify-content-center my-3">
+      <b-card class="container-fluid">
+        <img :src="article.picture" class="col-12">
+        <h1>{{article.title}}</h1>
+        <b-card-text>
+            {{article.abstract}}
+        </b-card-text>
+        <router-link class="btn btn-primary" :to="{ name: 'completeArticle', params: { id: article.id, list: articlesList }}">Lire la suite</router-link>
+      </b-card>
+    </div>
 </template>
 
 <script>
