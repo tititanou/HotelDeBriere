@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Création de l'article:</h1>
-    <div>
+    <div v-if="isConnected && isAdmin">
       
       <b-form v-on:keypress.enter.prevent @submit="onSubmit" v-if="show">
         <b-form-group label="Titre:">
@@ -174,6 +174,15 @@
         <pre class="m-0">{{ articleSelected[0] }}</pre>
       </b-card>
     </div>
+    <b-card class="mb-4 " v-else-if="isConnected && !isAdmin">
+      <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
+      <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+    </b-card>
+    <b-card class="mb-4 " v-else>
+      <p>Accès refusé! Vous devez vous connecter.</p>
+      <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+      <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
+    </b-card>
   </div>
 </template>
 
@@ -196,9 +205,21 @@ export default {
       propTags: [],
       show: true,
       articleTags: [],
+      isConnected: false,
+      isAdmin: false,
+      user: '',
+      currentU:{
+        firstname:'',
+        name:'',
+        admin:false
+      }
     };
   },
   created() {
+    this.user = firebase.auth().currentUser;
+    if (this.user != null){
+      this.isConnected = true;
+    }
     this.articlesId = this.getIDfromURL();
     this.displayPropTags(this.propTags);
   },
@@ -220,6 +241,27 @@ export default {
           }
         });
       });
+      self.user = firebase.auth().currentUser;
+      const usersRef = firebase.database().ref("users");
+      usersRef.on("value", snapshot => {
+          let data = snapshot.val();
+          let users = [];
+          Object.keys(data).forEach(key =>{
+            if (key == self.user.uid){
+              users.push({
+                firstname: data[key].firstname,
+                name: data[key].name,
+                admin: data[key].admin
+              });
+            }
+          });
+          if(users.length > 0) {
+            self.currentU.firstname = users[0].firstname;
+            self.currentU.name = users[0].name;
+            self.currentU.admin = users[0].admin;
+            self.isAdmin = self.currentU.admin;
+            }
+        });
   },
   methods: {
     displayPropTags(list) {

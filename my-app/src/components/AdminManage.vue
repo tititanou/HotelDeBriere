@@ -10,7 +10,7 @@
                                 <b-button variant="outline-secondary" block href="newArticle" size="lg">Ajouter un article</b-button>    
                             </b-col>
                             <b-col class="my-1">
-                                <b-button variant="outline-secondary" block href="#" size="lg">Modifier ou supprimer un article</b-button>    
+                                <b-button variant="outline-secondary" block href="editArticle" size="lg">Modifier ou supprimer un article</b-button>    
                             </b-col>
                         </b-card>
                     </b-row>
@@ -18,10 +18,10 @@
                     <b-row class="my-1">
                         <b-card title="Evenements">
                             <b-col class="my-1">
-                                <b-button variant="outline-secondary" block href="#" size="lg">Ajouter un événement</b-button>    
+                                <b-button variant="outline-secondary" block href="#" size="lg">Ajouter un évènement</b-button>    
                             </b-col>
                             <b-col class="my-1">
-                                <b-button variant="outline-secondary" block href="#" size="lg">Modifier ou supprimer un événement</b-button>    
+                                <b-button variant="outline-secondary" block href="#" size="lg">Modifier ou supprimer un évènement</b-button>    
                             </b-col>
                         </b-card>
                         
@@ -40,7 +40,7 @@
                     
                     <b-row class="my-1">
                         <b-card title="Gestion Utilisateurs">
-                            <b-button variant="outline-secondary" block href="gestionAdmins" size="lg">Gerer les administrateurs</b-button>
+                            <b-button variant="outline-secondary" block href="gestionAdmins" size="lg">Gérer les administrateurs</b-button>
                         </b-card>
                     </b-row>
                 </b-col>

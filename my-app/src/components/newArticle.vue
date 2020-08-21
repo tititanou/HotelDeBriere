@@ -2,7 +2,7 @@
 <b-container>
     <div>
         <h1>Création de l'article:</h1>
-        <div>
+        <div v-if="isConnected && isAdmin">
             
             <b-form v-on:keypress.enter.prevent @submit="onSubmit" @reset="onReset" v-if="show">
                 
@@ -140,6 +140,15 @@
                 
             </b-card>-->
         </div>
+        <b-card title="Portail administrateur" class="mb-4 " v-else-if="isConnected && !isAdmin">
+            <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
+            <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+        </b-card>
+        <b-card title="Portail administrateur" class="mb-4 " v-else>
+            <p>Accès refusé! Vous devez vous connecter.</p>
+            <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+            <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
+        </b-card>
     </div>
 </b-container>
   
@@ -156,6 +165,14 @@ export default {
   
   data() {
     return {
+        isConnected: false,
+        isAdmin: false,
+        user: '',
+        currentU:{
+            firstname:'',
+            name:'',
+            admin:false
+        },
         imageData: null,
         picture: null,
         uploadValue: 0,
@@ -177,11 +194,15 @@ export default {
       }
     },
     created(){
+        this.user = firebase.auth().currentUser;
+        if (this.user != null){
+            this.isConnected = true;
+        }
         this.display(this.propTags)
     },
     methods: {
         display(list){        
-         let ref = firebase.database().ref('tags');
+            let ref = firebase.database().ref('tags');
             ref.once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot) {
                     var childKey = childSnapshot.key;
@@ -190,118 +211,134 @@ export default {
                 });
             });
             console.log(list.length);
-       
-     },
-    onSubmit(evt) {
-    evt.preventDefault();
-    //alert(JSON.stringify(this.form))
-    if(this.form.abstract.length == 0 || this.form.abstract.length > 280){
-        alert("Vous devez écrire un résumé de 280 caractères maximum.")
-    }
-    else if (this.form.content.length == 0){
-        alert("Vous devez écrire un article.")
-    }
-    else if (this.form.releaseDate.length == 0){
-        alert("Vous devez entrer une date.")
-    }
-    else if (this.form.picture.length == 0){
-        alert("Vous devez entrer une image.")
-    }
-    else if (this.form.tags.length == 0){
-        alert("Vous devez entrer au moins une catégorie.")
-    }
-    else{
-        for(let i=0; i < this.form.tags.length; i++){
-            firebase.database().ref('tags/'+ this.form.tags[i]).set({
-                tag: this.form.tags[i]
+        },
+        onSubmit(evt) {
+            evt.preventDefault();
+            //alert(JSON.stringify(this.form))
+            if(this.form.abstract.length == 0 || this.form.abstract.length > 280){
+                alert("Vous devez écrire un résumé de 280 caractères maximum.")
+            }
+            else if (this.form.content.length == 0){
+                alert("Vous devez écrire un article.")
+            }
+            else if (this.form.releaseDate.length == 0){
+                alert("Vous devez entrer une date.")
+            }
+            else if (this.form.picture.length == 0){
+                alert("Vous devez entrer une image.")
+            }
+            else if (this.form.tags.length == 0){
+                alert("Vous devez entrer au moins une catégorie.")
+            }
+            else{
+                for(let i=0; i < this.form.tags.length; i++){
+                    firebase.database().ref('tags/'+ this.form.tags[i]).set({
+                        tag: this.form.tags[i]
+                    })
+                }
+                console.log(this.form.content.length)
+                firebase.database().ref('articles/').push({
+                    title: this.form.title,
+                    subtitle: this.form.subtitle,
+                    abstract: this.form.abstract,
+                    content: this.form.content,
+                    releaseDate: this.form.releaseDate,
+                    autor: this.form.autor,
+                    tags: this.form.tags,
+                    picture: this.form.picture,
+                    media: this.form.media,
+                    is3DReal: this.form.is3DReal,
+                }).then(alert("Votre article a été créé avec succès."));
+            }
+        },
+        onReset(evt) {
+            evt.preventDefault()
+            // Reset our form values
+            this.form.title = ''
+            this.form.subtitle = ''
+            this.form.abstract = ''
+            this.form.content = ''
+            this.form.releaseDate = ''
+            this.form.autor = ''
+            this.form.tags = []
+            this.form.picture = ''
+            this.form.media = ''
+            this.form.is3DReal = false
+            // Trick to reset/clear native browser form validation state
+            this.show = false
+            this.$nextTick(() => {
+                this.show = true
             })
+        },
+        previewImage(event) {
+            this.uploadValue=0;
+            this.picture=null;
+            this.imageData = event.target.files[0];
+        },
+        onUpload(){
+            this.picture=null;
+            const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+            storageRef.on(`state_changed`,snapshot=>{
+                this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            }, error=>{console.log(error.message)},
+            ()=>{this.uploadValue=100;
+                storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+                this.form.picture =url;
+                });
+            });
+        },
+        addTag(tag) {
+            if(tag!= ''){
+                if(this.form.tags.length < 3){
+                    let newTag = tag.toLowerCase();
+                    this.form.tags.push(newTag);
+                }
+            }
+        },
+        removeTag(index) {
+            this.form.tags.splice(index, 1);
+        },
+        tagExists(tag) {
+            return this.form.tags.indexOf(tag) !== -1;
+        },
+        handleTyping(e) {
+            if ( e.keyCode === 13 ) {
+                let tag = this.tag.replace(/,/g, '');
+                if ( !this.tagExists(tag) ) {
+                    this.addTag(tag);
+                    this.tag = '';
+                }
+            }
+        },
+        createArticle(){
+            //var user = firebase.auth().currentUser;
+            //console.log(user.uid);   
         }
-        console.log(this.form.content.length)
-        firebase.database().ref('articles/').push({
-            title: this.form.title,
-            subtitle: this.form.subtitle,
-            abstract: this.form.abstract,
-            content: this.form.content,
-            releaseDate: this.form.releaseDate,
-            autor: this.form.autor,
-            tags: this.form.tags,
-            picture: this.form.picture,
-            media: this.form.media,
-            is3DReal: this.form.is3DReal,
-        }).then(alert("Votre article a été créé avec succès."));
-    }
     },
-    onReset(evt) {
-    evt.preventDefault()
-    // Reset our form values
-    this.form.title = ''
-    this.form.subtitle = ''
-    this.form.abstract = ''
-    this.form.content = ''
-    this.form.releaseDate = ''
-    this.form.autor = ''
-    this.form.tags = []
-    this.form.picture = ''
-    this.form.media = ''
-    this.form.is3DReal = false
-    // Trick to reset/clear native browser form validation state
-    this.show = false
-    this.$nextTick(() => {
-        this.show = true
-    })
-    },
-    previewImage(event) {
-      this.uploadValue=0;
-      this.picture=null;
-      this.imageData = event.target.files[0];
-    },
-
-    onUpload(){
-      this.picture=null;
-      const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      }, error=>{console.log(error.message)},
-      ()=>{this.uploadValue=100;
-        storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-          this.form.picture =url;
+    mounted(){
+        let viewUser = this;
+        viewUser.user = firebase.auth().currentUser;
+        const usersRef = firebase.database().ref("users");
+        usersRef.on("value", snapshot => {
+            let data = snapshot.val();
+            let users = [];
+            Object.keys(data).forEach(key =>{
+                if (key == viewUser.user.uid){
+                    users.push({
+                        firstname: data[key].firstname,
+                        name: data[key].name,
+                        admin: data[key].admin
+                    });
+                }
+            });
+            if(users.length > 0) {
+                viewUser.currentU.firstname = users[0].firstname;
+                viewUser.currentU.name = users[0].name;
+                viewUser.currentU.admin = users[0].admin;
+                viewUser.isAdmin = viewUser.currentU.admin;
+            }
         });
-      });
-    },
-    addTag(tag) {
-        if(tag!= ''){
-            if(this.form.tags.length < 3){
-                let newTag = tag.toLowerCase();
-                this.form.tags.push(newTag);
-            }
-        }
-    },
-    removeTag(index) {
-        this.form.tags.splice(index, 1);
-    },
-    tagExists(tag) {
-        return this.form.tags.indexOf(tag) !== -1;
-    },
-    handleTyping(e) {
-        if ( e.keyCode === 13 ) {
-            let tag = this.tag.replace(/,/g, '');
-            if ( !this.tagExists(tag) ) {
-                this.addTag(tag);
-                this.tag = '';
-            }
-        }
-    },
-
-    createArticle(){
-        //var user = firebase.auth().currentUser;
-        //console.log(user.uid);
-        
     }
-
-    }
-  
-
-  
 };
 </script>
 
