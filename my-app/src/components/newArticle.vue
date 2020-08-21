@@ -346,9 +346,7 @@ export default {
 img.preview {
     width: 200px;
 }
-
 img.view {
     width: auto;
 }
-
 </style>

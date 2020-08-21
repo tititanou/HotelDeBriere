@@ -2,7 +2,7 @@
      <b-card title="Liste des administrateurs" style="max-width: 45rem; min-width: 45rem; float:none;" class="mb-4 center-block" v-if="isConnected && isAdmin">
         <b-list-group>
             <b-list-item v-for="admin in admins" :key="admin.id">
-                {{admin.firstname}} {{admin.name}} <b-form-checkbox label="Administrateur" v-model="admin.admin" @change="updateAdmin(admin)" name="check-button" switch></b-form-checkbox>
+                <b-form-checkbox label="Administrateur" v-model="admin.admin" @change="updateAdmin(admin)" name="check-button" switch></b-form-checkbox>{{admin.firstname}} {{admin.name}}
             </b-list-item>
         </b-list-group>
     </b-card>

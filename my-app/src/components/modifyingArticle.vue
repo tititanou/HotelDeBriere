@@ -235,7 +235,6 @@ export default {
           if (childSnapshot.key == id) {
             returnArr.push(childSnapshot.val());
             // Fill the local data property with Firebase data
-
             self.articleSelected = returnArr;
             self.articleTags = self.articleSelected[0].tags;
           }

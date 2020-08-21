@@ -3,10 +3,7 @@
     <div class="row my-5">
       <h1>On en parle !</h1>
     </div>
-    <div class="row" style="background-color: black;">
-    <input type="text" v-model="search" placeholder="Rechercher un article">
-    <b-button variant="primary" @click="searchArticleByText">Go</b-button>
-    </div>
+    <Searchbar />
     <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1">
       <Article
        v-for="articleI in articlesList"
@@ -21,12 +18,14 @@
 
 <script>
 import Article from "@/components/ArticlePresentation.vue";
+import Searchbar from "@/components/Searchbar.vue"
 import firebase from "firebase";
 
 export default {
  
   components: {
-    Article
+    Article,
+    Searchbar
   },
      data(){
         return {
