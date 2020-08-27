@@ -318,7 +318,7 @@ export default {
             media: this.articleSelected[0].media,
             is3DReal: this.articleSelected[0].is3DReal,
           })
-          .then(alert("Votre article a été modifier avec succès."));
+          .then(alert("Votre article a été modifié avec succès."));
       }
     },
     onUpload() {

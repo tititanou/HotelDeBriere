@@ -14,6 +14,22 @@
                     <b-form-input v-model="form.subtitle" placeholder="Sous-titre"></b-form-input>
                 </b-form-group>
 
+                <b-form-group label="Onglet:">
+                    <b-form-input placeholder="Ajouter un onglet en appuyant sur Entrée" list="tab-input-list" v-model="tab" @keyup="handleTypingTab"></b-form-input>
+                    <b-form-datalist id="tab-input-list" :options="propTabs"></b-form-datalist>
+                    <div class="tags mt-2">
+                        <div v-for="(_tab, index) in form.tabs" :key="index" class="tag" @click="removeTab(index)">{{ _tab }}</div>
+                    </div>                
+                </b-form-group>
+
+                 <b-form-group label="Sous-Onglet:" description="facultatif">
+                    <b-form-input placeholder="Ajouter un sous-onglet en appuyant sur Entrée" list="subTab-input-list" v-model="subTab" @keyup="handleTypingSubTab"></b-form-input>
+                    <b-form-datalist id="subTab-input-list" :options="propSubTabs"></b-form-datalist>
+                    <div class="tags mt-2">
+                        <div v-for="(_subTab, index) in form.subTabs" :key="index" class="tag" @click="removeSubTab(index)">{{ _subTab }}</div>
+                    </div>                
+                </b-form-group>
+
                 <b-form-group label="Résumé:">
                     <b-form-textarea v-model="form.abstract" placeholder="Résumé" rows="3" max-rows="6"></b-form-textarea>
                 </b-form-group>
@@ -35,6 +51,7 @@
                         <div v-for="(_tag, index) in form.tags" :key="index" class="tag" @click="removeTag(index)">{{ _tag }}</div>
                     </div>                
                 </b-form-group>
+
                 <!--<b-form-input type="text" placeholder="Add tags separated by ," v-model="tag" @keyup="handleTyping"></b-form-input>
                 <label>Tags</label>
                 <div class="tags">
@@ -118,7 +135,7 @@
                     <h3>{{form.subtitle}}</h3>
                 <div class="row">
                     <div class="col">Mis en ligne le: {{form.releaseDate}}</div> 
-                    <div class="col">Ecrit part: {{form.autor}}</div>  
+                    <div class="col">Ecrit par: {{form.autor}}</div>  
                     <div class="col">Catégories: 
                         <div class="raw" v-for="(_tag, index) in form.tags" :key="index">{{_tag}}</div>
                     </div>
@@ -140,11 +157,11 @@
                 
             </b-card>-->
         </div>
-        <b-card title="Portail administrateur" class="mb-4 " v-else-if="isConnected && !isAdmin">
+        <b-card class="mb-4 " v-else-if="isConnected && !isAdmin">
             <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
             <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
         </b-card>
-        <b-card title="Portail administrateur" class="mb-4 " v-else>
+        <b-card class="mb-4 " v-else>
             <p>Accès refusé! Vous devez vous connecter.</p>
             <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
             <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
@@ -179,6 +196,8 @@ export default {
         form: {
             title: '',
             subtitle: '',
+            tabs: [],
+            subTabs: [],
             abstract:'',
             content: '',
             releaseDate: '',
@@ -188,6 +207,10 @@ export default {
             media: '',
             is3DReal: false,
         },
+        tab: '',
+        propTabs: [],
+        subTab: '',
+        propSubTabs: [],
         tag: '',
         propTags: [],
         show: true
@@ -198,7 +221,8 @@ export default {
         if (this.user != null){
             this.isConnected = true;
         }
-        this.display(this.propTags)
+        this.display(this.propTags);
+        this.displayTabs(this.propTabs);
     },
     methods: {
         display(list){        
@@ -210,7 +234,31 @@ export default {
                     list.push(childKey);
                 });
             });
-            console.log(list.length);
+        },
+        displayTabs(list){        
+            let ref = firebase.database().ref('tabs');
+            ref.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    console.log(childKey);
+                    list.push(childKey);
+                });
+            });
+        },
+        displaySubTabs(list){     
+            let self = this   
+            console.log("coucou")
+            let ref = firebase.database().ref('tabs/' + self.form.tabs[0] + '/subTab');
+            ref.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot){
+                    var childData = childSnapshot.val();
+                    if (childData != ''){
+                        list.push(childData)
+                    }
+                })
+                console.log("la liste= " + list) 
+            });
+            console.log(list.length + ' et la liste est ' + list);
         },
         onSubmit(evt) {
             evt.preventDefault();
@@ -230,16 +278,66 @@ export default {
             else if (this.form.tags.length == 0){
                 alert("Vous devez entrer au moins une catégorie.")
             }
+            else if (this.form.tabs.length == 0){
+                alert("Vous devez entrer un onglet.")
+            }
             else{
+                let subTabsList = [];
+                if (this.propSubTabs != []){
+                    subTabsList = this.propSubTabs;
+                }
+                console.log("liste subTab 1= " + this.form.subTabs[0])
+                if(this.form.subTabs[0] != undefined){
+                    subTabsList.push(this.form.subTabs[0]);
+                }
+                console.log(subTabsList);
+                firebase.database().ref('tabs/'+ this.form.tabs[0]).set({
+                    tab: this.form.tabs[0],
+                })
+                if(subTabsList.length > 0){
+                    for(let i = 0 ; i < subTabsList.length ; i++){
+                        console.log(subTabsList[i])
+                        if(subTabsList[i] != undefined){
+                            console.log('problem???')
+                            firebase.database().ref('tabs/' + this.form.tabs[0] + '/subTab/' + subTabsList[i]).set({
+                                subTab: subTabsList[i]
+                            })
+                        }
+                    }
+                }
                 for(let i=0; i < this.form.tags.length; i++){
                     firebase.database().ref('tags/'+ this.form.tags[i]).set({
                         tag: this.form.tags[i]
                     })
                 }
+                let subTabArt = ''
+                if(this.form.subTabs[0] != undefined){
+                    console.log("holaaa" + this.form.subTabs[0])
+                    subTabArt = this.form.subTabs[0]
+                }
+                
                 console.log(this.form.content.length)
+                if(this.form.tabs[0].toLowerCase() != 'articles'){
+                    firebase.database().ref(this.form.tabs[0] + '/').push({
+                        title: this.form.title,
+                        subtitle: this.form.subtitle,
+                        tab: this.form.tabs[0],
+                        subTab: subTabArt,
+                        abstract: this.form.abstract,
+                        content: this.form.content,
+                        releaseDate: this.form.releaseDate,
+                        autor: this.form.autor,
+                        tags: this.form.tags,
+                        picture: this.form.picture,
+                        media: this.form.media,
+                        is3DReal: this.form.is3DReal,
+                    })
+                }
                 firebase.database().ref('articles/').push({
                     title: this.form.title,
                     subtitle: this.form.subtitle,
+                    tab: this.form.tabs[0],
+                    subTab: subTabArt,
                     abstract: this.form.abstract,
                     content: this.form.content,
                     releaseDate: this.form.releaseDate,
@@ -249,6 +347,7 @@ export default {
                     media: this.form.media,
                     is3DReal: this.form.is3DReal,
                 }).then(alert("Votre article a été créé avec succès."));
+                
             }
         },
         onReset(evt) {
@@ -256,6 +355,8 @@ export default {
             // Reset our form values
             this.form.title = ''
             this.form.subtitle = ''
+            this.form.tabs = []
+            this.form.subTabs = []
             this.form.abstract = ''
             this.form.content = ''
             this.form.releaseDate = ''
@@ -295,11 +396,39 @@ export default {
                 }
             }
         },
+        addTab(tab){
+            if(tab != ''){
+                if(this.form.tabs.length < 1){
+                    let newTab = tab.toLowerCase();
+                    this.form.tabs.push(newTab);
+                }
+            }
+        },
+        addSubTab(subTab){
+            if(subTab != ''){
+                if(this.form.subTabs.length < 1){
+                    let newSubTab = subTab.toLowerCase();
+                    this.form.subTabs.push(newSubTab);
+                }
+            }
+        },
         removeTag(index) {
             this.form.tags.splice(index, 1);
         },
+        removeTab(index) {
+            this.form.tabs.splice(index, 1);
+        },
+        removeSubTab(index) {
+            this.form.subTabs.splice(index, 1);
+        },
         tagExists(tag) {
             return this.form.tags.indexOf(tag) !== -1;
+        },
+        tabExists(tab) {
+            return this.form.tabs.indexOf(tab) !== -1;
+        },
+        subTabExists(subTab) {
+            return this.form.subTabs.indexOf(subTab) !== -1;
         },
         handleTyping(e) {
             if ( e.keyCode === 13 ) {
@@ -307,6 +436,25 @@ export default {
                 if ( !this.tagExists(tag) ) {
                     this.addTag(tag);
                     this.tag = '';
+                }
+            }
+        },
+        handleTypingTab(e) {
+            if ( e.keyCode === 13 ) {
+                let tab = this.tab.replace(/,/g, '');
+                if ( !this.tabExists(tab) ) {
+                    this.addTab(tab);
+                    this.tab = '';
+                }
+                this.displaySubTabs(this.propSubTabs);
+            }
+        },
+        handleTypingSubTab(e) {
+            if ( e.keyCode === 13 ) {
+                let subTab = this.subTab.replace(/,/g, '');
+                if ( !this.subTabExists(subTab) ) {
+                    this.addSubTab(subTab);
+                    this.subTab = '';
                 }
             }
         },
@@ -338,7 +486,7 @@ export default {
                 viewUser.isAdmin = viewUser.currentU.admin;
             }
         });
-    }
+    },
 };
 </script>
 
