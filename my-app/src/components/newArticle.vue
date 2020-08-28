@@ -251,7 +251,7 @@ export default {
             let ref = firebase.database().ref('tabs/' + self.form.tabs[0] + '/subTab');
             ref.once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot){
-                    var childData = childSnapshot.val();
+                    var childData = childSnapshot.key;
                     if (childData != ''){
                         list.push(childData)
                     }
@@ -399,7 +399,7 @@ export default {
         addTab(tab){
             if(tab != ''){
                 if(this.form.tabs.length < 1){
-                    let newTab = tab.toLowerCase();
+                    let newTab = tab;
                     this.form.tabs.push(newTab);
                 }
             }
@@ -417,6 +417,8 @@ export default {
         },
         removeTab(index) {
             this.form.tabs.splice(index, 1);
+            this.propSubTabs = [];
+            this.form.subTabs = []
         },
         removeSubTab(index) {
             this.form.subTabs.splice(index, 1);

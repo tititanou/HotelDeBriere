@@ -59,24 +59,31 @@ export default{
   data(){
     return{
       isConnected: false,
-      user:''
+      user: '',
+      menu: []
     }
   },
-  /*computed: { 
-    get: function(){
-      console.log("hello")
-      this.user = firebase.auth().currentUser;
-      if(this.user != null){
-        this.isConnected = true;
-      }
-    }
-  },*/
   created(){
     this.user = firebase.auth().currentUser;
     console.log(this.user)
     if(this.user != null){
       return this.isConnected = true;
     }
+  },
+  mounted(){
+    let self = this;
+    let ref = firebase.database().ref('tabs');
+    ref.once('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        var childKey = childSnapshot.key;
+        console.log(childSnapshot);
+        self.menu.push(childKey);
+        if(childSnapshot.hasChildren()){
+          console.log("coucou")
+        }
+      });
+    });
+    console.log(self.menu)
   },
   methods:{
     signOutUser(){
