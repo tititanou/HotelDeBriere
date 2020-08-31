@@ -4,7 +4,7 @@
         <img :src="event.picture" class="col-12">
         <h1>{{event.title}}</h1>
         <b-card-text>
-          <h2>Evénement prévu le : {{date}}</h2>
+          <h3>Evénement prévu le : {{this.displayDate(event.releaseDate)}}</h3>
             {{event.abstract}}
         </b-card-text>
         <router-link class="btn btn-primary" :to="{ name: 'completeEvent', params: { id: event.id, list: eventList }}">Lire la suite</router-link>
@@ -29,24 +29,28 @@ export default {
     this.date = this.formatCompat(this.event.releaseDate);
   },
   methods: {
-    formatCompat(date) {
-      var ms = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+    displayDate(date) {
+      let month = ""
+      let months = [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre",
       ];
-      return (
-        date.getDate() + " " + ms[date.getMonth()] + " " + date.getFullYear()
-      );
+      for (let i = 0; i <= months.length; i++) {
+        if( i == date.split("-")[1]) {
+          month = months[i-1]
+        }
+      }
+      return "" + date.split("-")[2] + " " + month + " " + date.split("-")[0] + ""
     },
     send: function () {
       this.showContact = true;

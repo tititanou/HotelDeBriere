@@ -24,7 +24,7 @@
       <h1 class="my-3">{{articleSelected[0].title}}</h1>
       <h3 class="my-1">{{articleSelected[0].subtitle}}</h3>
       <div class="row my-1">
-        <div class="col">Mis en ligne le: {{articleSelected[0].releaseDate}}</div> 
+        <div class="col">Mis en ligne le: {{this.displayDate(articleSelected[0].releaseDate)}}</div> 
         <div class="col">Ecrit part: {{articleSelected[0].autor}}</div>  
         <div class="col">Catégories: 
             <div class="raw" v-for="(_tag, index) in articleSelected[0].tags" :key="index">{{_tag}}</div>
@@ -60,6 +60,29 @@ export default {
      mounted: function(){
      },
      methods:{
+       displayDate(date) {
+      let month = ""
+      let months = [
+        "Janvier",
+        "Février",
+        "Mars",
+        "Avril",
+        "Mai",
+        "Juin",
+        "Juillet",
+        "Août",
+        "Septembre",
+        "Octobre",
+        "Novembre",
+        "Décembre",
+      ];
+      for (let i = 0; i <= months.length; i++) {
+        if( i == date.split("-")[1]) {
+          month = months[i-1]
+        }
+      }
+      return "" + date.split("-")[2] + " " + month + " " + date.split("-")[0] + ""
+    },
        /*download(){
          const doc = new jspdf()
          const html = this.$ref.ArticleContent.innerHTML
