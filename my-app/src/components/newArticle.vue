@@ -67,13 +67,13 @@
                             <input type="file" @change="previewImage" accept="image/*" >
                         </div>
                         <div>
-                            <p>Progress: {{uploadValue.toFixed()+"%"}}
+                            <p>Progression: {{uploadValue.toFixed()+"%"}}
                             <progress id="progress" :value="uploadValue" max="100" ></progress>  </p>
                         </div>
                         <div v-if="imageData!=null">
                             <img class="preview" required :src="form.picture">
                             <br>
-                            <button @click.prevent="onUpload">Upload</button>
+                            <button @click.prevent="onUpload">Importer l'image</button>
                         </div>
                    </b-form>
                 </b-form-group>
@@ -251,7 +251,7 @@ export default {
             let ref = firebase.database().ref('tabs/' + self.form.tabs[0] + '/subTab');
             ref.once('value', function(snapshot) {
                 snapshot.forEach(function(childSnapshot){
-                    var childData = childSnapshot.key;
+                    var childData = childSnapshot.val();
                     if (childData != ''){
                         list.push(childData)
                     }
@@ -399,7 +399,7 @@ export default {
         addTab(tab){
             if(tab != ''){
                 if(this.form.tabs.length < 1){
-                    let newTab = tab;
+                    let newTab = tab.toLowerCase();
                     this.form.tabs.push(newTab);
                 }
             }
@@ -417,8 +417,6 @@ export default {
         },
         removeTab(index) {
             this.form.tabs.splice(index, 1);
-            this.propSubTabs = [];
-            this.form.subTabs = []
         },
         removeSubTab(index) {
             this.form.subTabs.splice(index, 1);

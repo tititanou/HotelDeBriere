@@ -15,6 +15,8 @@ import ModifyingArticle from "@/views/ModifyingArticle";
 import NewEvent from "@/views/NewEvent";
 import EventList from "@/views/EventList";
 import ChoosenEvent from "@/views/ChoosenEvent";
+import ModifyingEvent from "@/views/ModifyingEvent";
+import EditEvent from "@/views/EditEvent";
 import "firebase/auth";
 
 Vue.use(VueRouter)
@@ -86,9 +88,20 @@ const routes = [{
     component: EditArticle,
 },
 {
+    path: '/editEvent',
+    name: 'editEvent',
+    component: EditEvent,
+},
+{
     path: '/modifyingArticle:id',
     name: 'modifyingArticle',
     component: ModifyingArticle,
+    props: true
+},
+{
+    path: '/modifyingEvent:id',
+    name: 'modifyingEvent',
+    component: ModifyingEvent,
     props: true
 },
 {

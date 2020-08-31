@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Création de l'article:</h1>
+    <h1>Modification de l'article:</h1>
     <div v-if="isConnected && isAdmin">
       
       <b-form v-on:keypress.enter.prevent @submit="onSubmit" v-if="show">

@@ -19,13 +19,7 @@
           </b-form-group>
 
           <b-form-group label="Date de l'événement:">
-            <b-form-datepicker
-              :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit', weekday: 'short' }"
-              v-model="form.releaseDate"
-              locale="fr"
-              required
-              class="mb-2"
-            ></b-form-datepicker>
+            <b-form-datepicker v-model="form.releaseDate" locale="fr" required class="mb-2"></b-form-datepicker>
           </b-form-group>
 
           <b-form-group label="Photo de présentation:">
@@ -35,7 +29,7 @@
               </div>
               <div>
                 <p>
-                  Progress: {{uploadValue.toFixed()+"%"}}
+                  Progression: {{uploadValue.toFixed()+"%"}}
                   <progress
                     id="progress"
                     :value="uploadValue"
@@ -46,7 +40,7 @@
               <div v-if="imageData!=null">
                 <img class="preview" required :src="form.picture" />
                 <br />
-                <button @click.prevent="onUpload">Upload</button>
+                <button @click.prevent="onUpload">Importer l'image</button>
               </div>
             </b-form>
           </b-form-group>
@@ -57,7 +51,7 @@
           </b-form-group>
 
           <div class="mt-5">
-            <h1>Prévisualisation de l'article:</h1>
+            <h1>Prévisualisation de l'évenement:</h1>
             <div>
               <h2>Vignette:</h2>
               <b-card
@@ -71,12 +65,12 @@
                 style="max-width: 50rem;"
                 class="mb-4"
               >
-              <b-card-text>
-                <h1>{{form.title}}</h1>
-                {{form.abstract}}
-              </b-card-text>
+                <b-card-text>
+                  <h1>{{form.title}}</h1>
+                  {{form.abstract}}
+                </b-card-text>
 
-              <b-button href="#" variant="primary">Lire la suite</b-button>
+                <b-button href="#" variant="primary">Lire la suite</b-button>
               </b-card>
             </div>
             <br />
@@ -254,7 +248,7 @@ export default {
             media: this.form.media,
             is3DReal: this.form.is3DReal,
           })
-          .then(alert("Votre article a été créé avec succès."));
+          .then(alert("Votre événement a été créé avec succès."));
       }
     },
     onReset(evt) {
