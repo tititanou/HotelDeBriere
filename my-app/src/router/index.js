@@ -12,6 +12,9 @@ import ArticlesList from "@/views/ArticlesList";
 import ChoosenArticle from "@/views/ChoosenArticle";
 import EditArticle from "@/views/EditArticle";
 import ModifyingArticle from "@/views/ModifyingArticle";
+import NewEvent from "@/views/NewEvent";
+import EventList from "@/views/EventList";
+import ChoosenEvent from "@/views/ChoosenEvent";
 import "firebase/auth";
 
 Vue.use(VueRouter)
@@ -33,18 +36,23 @@ const routes = [{
 },
 {
     path: '/admin',
-    name: 'admin', 
+    name: 'admin',
     component: Admin
 },
 {
     path: '/gestionAdmins',
-    name: 'adminsManage', 
-    component: AdminsManage
+    name: 'adminsManage',
+    component: AdminsManage,
 },
 {
     path: '/articles',
     name: 'articlesList',
-    component: ArticlesList
+    component: ArticlesList,
+},
+{
+    path: '/events',
+    name: 'eventList',
+    component: EventList,
 },
 {
     path: '/404',
@@ -55,6 +63,12 @@ const routes = [{
     path: '/article:id',
     name: 'completeArticle',
     component: ChoosenArticle,
+    props: true
+},
+{
+    path: '/event:id',
+    name: 'completeEvent',
+    component: ChoosenEvent,
     props: true
 },
 {
@@ -76,6 +90,11 @@ const routes = [{
     name: 'modifyingArticle',
     component: ModifyingArticle,
     props: true
+},
+{
+    path: '/newEvent',
+    name: 'newEvent',
+    component: NewEvent,
 }
 ]
 
@@ -90,10 +109,10 @@ router.beforeEach((to, from, next) => {
     const isAuthenticated = firebase.auth().currentUser;
     console.log("isauthenticated", isAuthenticated);
     if (requiresAuth && !isAuthenticated) {
-      next("/login");
+        next("/login");
     } else {
-      next();
+        next();
     }
-  });
+});
 
 export default router;
