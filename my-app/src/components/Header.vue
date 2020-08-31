@@ -20,7 +20,7 @@
         </b-nav-item-dropdown>
         <b-nav-item href="#">La phase d'amorçage</b-nav-item>
         <b-nav-item href="#">Le chantier</b-nav-item>
-        <b-nav-item href="#">Evenements</b-nav-item>
+        <b-nav-item href="events">Evenements</b-nav-item>
         <b-nav-item href="articles">On en parle</b-nav-item>
         <b-nav-item href="#">Ressources</b-nav-item>
         <b-nav-item href="admin">Administration</b-nav-item>
