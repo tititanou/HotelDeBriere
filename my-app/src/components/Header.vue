@@ -78,9 +78,9 @@ export default{
         var childKey = childSnapshot.key;
         console.log(childSnapshot);
         self.menu.push(childKey);
-        if(childSnapshot.hasChildren()){
+        /*if(childSnapshot){
           console.log("coucou")
-        }
+        }*/
       });
     });
     console.log(self.menu)
