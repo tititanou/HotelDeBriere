@@ -25,7 +25,7 @@
       </div>
       <div>
         <h1>{{eventSelected[0].title}}</h1>
-        <h3>{{this.displayDate(eventSelected[0].releaseDate)}}</h3>
+        <h3>Evénement du {{this.displayDate(eventSelected[0].releaseDate)}}</h3>
         <div v-html="eventSelected[0].content"></div>
       </div>
     </b-container>

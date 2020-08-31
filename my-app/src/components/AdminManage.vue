@@ -21,7 +21,7 @@
                                 <b-button variant="outline-secondary" block href="newEvent" size="lg">Ajouter un évènement</b-button>    
                             </b-col>
                             <b-col class="my-1">
-                                <b-button variant="outline-secondary" block href="#" size="lg">Modifier ou supprimer un évènement</b-button>    
+                                <b-button variant="outline-secondary" block href="editEvent" size="lg">Modifier ou supprimer un évènement</b-button>    
                             </b-col>
                         </b-card>
                     </b-row>
