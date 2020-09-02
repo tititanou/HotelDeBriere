@@ -399,7 +399,7 @@ export default {
         addTab(tab){
             if(tab != ''){
                 if(this.form.tabs.length < 1){
-                    let newTab = tab.toLowerCase();
+                    let newTab = tab;
                     this.form.tabs.push(newTab);
                 }
             }

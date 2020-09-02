@@ -69,23 +69,29 @@ export default{
     if(this.user != null){
       return this.isConnected = true;
     }
-  },
-  mounted(){
-    let self = this;
-    let ref = firebase.database().ref('tabs');
-    ref.once('value', function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childKey = childSnapshot.key;
-        console.log(childSnapshot);
-        self.menu.push(childKey);
-        /*if(childSnapshot){
-          console.log("coucou")
-        }*/
-      });
-    });
-    console.log(self.menu)
+    console.log("1/ " + this.menu)
+    this.menu = this.displayMenu();
+    console.log("coucou " + this.menu)
   },
   methods:{
+    displayMenu(){
+      let list = [];
+      let ref = firebase.database().ref('tabs');
+      ref.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          //var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          const onglet = {
+            tab: childData.tab,
+            subTab: childData.subTab
+          }
+          console.log("onglet = " + onglet);
+          list.push(onglet);
+          //onglets.push(childKey)
+        });
+      });
+      return list;
+    },
     signOutUser(){
       firebase.auth().signOut().then(function() {
         alert("Vous êtes déconnecté. A bientôt");
@@ -95,6 +101,50 @@ export default{
     });
     }
   }
+  /*mounted(){
+    let self = this;
+    //let onglets = []
+    let ref = firebase.database().ref('tabs');
+    ref.once('value', function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        var childKey = childSnapshot.key;
+        var childData = childSnapshot.val();
+        const onglet = {
+          tab: childData.tab,
+          subTab: childData.subTab
+        }
+        console.log(childKey);
+        self.menu.push(onglet);
+        //onglets.push(childKey)
+      });
+    });
+    let list = [];
+    let db = firebase.database()
+    console.log("onglets: " + onglets.length)
+    for(let i = 0; i < onglets.length; i++){
+      let tab = onglets[i];
+      let tempStr = "tabs/" + tab + "/subTab";
+      console.log("hello " + tempStr);
+      db.ref('tabs/' + tab + '/subTab').once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot){
+          var childData = childSnapshot.key;
+          if (childData != ''){
+            list.push(childData)
+          }
+        })
+        console.log("coucou" + list);
+      })
+    }
+    console.log("couc" + self.menu);
+  },
+  beforeUpdate(){
+    this.user = firebase.auth().currentUser;
+    console.log(this.user)
+    if(this.user != null){
+      return this.isConnected = true;
+    }
+  },*/
+ 
 }
 </script>
 
