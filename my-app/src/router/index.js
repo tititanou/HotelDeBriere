@@ -17,6 +17,7 @@ import EventList from "@/views/EventList";
 import ChoosenEvent from "@/views/ChoosenEvent";
 import ModifyingEvent from "@/views/ModifyingEvent";
 import EditEvent from "@/views/EditEvent";
+import MoreAbout from "@/views/MoreAbout.vue";
 import "firebase/auth";
 
 Vue.use(VueRouter)
@@ -25,6 +26,11 @@ const routes = [{
     path: '/',
     name: 'home',
     component: Home
+},
+{
+    path: '/enSavoirPlus',
+    name: 'enSavoirPlus',
+    component: MoreAbout
 },
 {
     path: '/inscriptionConnexion',

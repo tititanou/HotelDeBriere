@@ -1,35 +1,24 @@
 <template>
-    <b-row>
-        <b-card
-            no-body
-            style="max-width: 100rem;"
-            img-src="https://static.actu.fr/uploads/2019/10/hotel-magny-854x641.jpg"
-            img-alt="Image"
-            img-top
-        >
-            <template v-slot:header>
-                <h4 class="mb-0">Présentation</h4>
-            </template>
-
-            <b-card-body>
-                <b-card-text>
-                    C’est un lieu chargé d’histoire qui est sur le point de connaître une nouvelle vie.
-
-                    Mercredi 25 septembre, les esquisses du projet de réhabilitation de l’hôtel de Brière, implanté place de la Halle, à Magny-en-Vexin (Val-d’Oise), ont été présentées devant plus de soixante personnes réunies à la salle des fêtes.
-
-                    Le dossier sera piloté par les associations Magny-en-Vexin: une histoire qui se cultive et Terre et Vie, en concertation avec la municipalité. L’objectif est, à terme, d’y créer un centre d’information et de formation favorisant la transmission d’expertises dans le domaine de la restauration.
-                </b-card-text>
-            </b-card-body>
-        </b-card>  
-    </b-row>  
+  <b-row>
+    <b-card>
+      <b-row>
+        <img src="../assets/img/hotelMagny.jpg" class="col-12" />
+      </b-row>
+      <b-row>
+        <h1 class="px-3">Vers la renaissance de l’Hôtel de Brière à Magny-en-Vexin ?</h1>
+      </b-row>
+      <b-card-body>
+        <b-card-text>L’Hôtel de Brière, situé au 22 place de la Halle à Magny-en-Vexin, dans le Val d’Oise (95), est actuellement dans un état de décrépitude avancé. Les fenêtres du rez-de-chaussée sont murées et un arbre pousse à l’intérieur. Cet hôtel particulier, probablement construit avant 1740, et dont il existe très peu de références historiques, est malgré tout remarquable du fait de son architecture typique du Vexin. Il est inscrit à l’inventaire des bâtiments de France. Plusieurs projets immobiliers n’ont pas abouti pour des raisons multiples.</b-card-text>
+      </b-card-body>
+      <b-button class="btn-valid" href="enSavoirPlus">En savoir plus sur le projet et l'association...</b-button>
+    </b-card>
+  </b-row>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
 <style scoped>
-
+@import "../assets/custom.scss";
 </style>

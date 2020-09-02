@@ -1,13 +1,13 @@
 <template>
   <div class="col justify-content-center my-3">
-      <b-card class="container-fluid">
+      <b-card class="shadow container-fluid">
         <img :src="event.picture" class="col-12">
         <h1>{{event.title}}</h1>
         <b-card-text>
           <h3>Evénement prévu le : {{this.displayDate(event.releaseDate)}}</h3>
             {{event.abstract}}
         </b-card-text>
-        <router-link class="btn btn-primary" :to="{ name: 'completeEvent', params: { id: event.id, list: eventList }}">Lire la suite</router-link>
+        <router-link class="btn btn-secondary btn-valid" :to="{ name: 'completeEvent', params: { id: event.id, list: eventList }}">Lire la suite</router-link>
       </b-card>
     </div>
 </template>
@@ -58,6 +58,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
+@import "../assets/custom.scss";
 </style>
