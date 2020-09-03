@@ -10,7 +10,7 @@
             <b-form-group label="Email" label-for="inputEmail">
                 <b-form-input id="inputEmail" v-model="form.email" type="email" disabled>{{user.email}}</b-form-input>
             </b-form-group>
-            <b-button type="submit" variant="primary">Valider</b-button>
+            <b-button type="submit" class="btn-valid">Valider</b-button>
         </b-form>
         <b-button v-if="isAdmin" variant="danger" href="admin">Espace Administrateur</b-button>
     </b-card>
@@ -86,3 +86,6 @@ export default {
     },
 }
 </script>
+<style scoped>
+@import "../assets/custom.scss";
+</style>

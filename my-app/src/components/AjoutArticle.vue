@@ -9,7 +9,7 @@
                         <input type="text" id="sous-titre" name="sous-titre" class="form-control  col-8 " v-model="form.sousTitre" placeholder="Sous-titre de l'article">
                         <label class="mt-3 col-4" for="resume">Resumé:</label>
                         <b-form-textarea type="text" id="resume" name="resume" class="form-control  col-8 " required v-model="form.resume" placeholder="Entrez le résumé"/>
-                        <b-button class="mt-3" @click.prevent="creerArticle" type="submit" variant="primary">Se connecter</b-button>
+                        <b-button class="btn-valid mt-3" @click.prevent="creerArticle" type="submit">Se connecter</b-button>
                 </b-card-text>
             </b-card>
     </b-container>
@@ -41,3 +41,7 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+@import "../assets/custom.scss";
+</style>

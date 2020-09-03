@@ -8,7 +8,7 @@
                         <input type="email" id="email" name="email" class="form-control  col-8 " required v-model="form.email" placeholder="Votre adresse mail">
                         <label class="mt-3 col-4" for="password">Mot de passe:</label>
                         <input type="password" id="password" name="password" class="form-control  col-8 " required v-model="form.password" placeholder="Choisissez votre mot de passe">
-                        <b-button class="mt-3" type="submit" @click="connexion" variant="primary">Se connecter</b-button>
+                        <b-button class="mt-3 btn-valid" type="submit" @click="connexion">Se connecter</b-button>
                 </b-card-text>
             </b-card>
         </b-card-group>
@@ -45,5 +45,5 @@ export default{
 </script>
 
 <style scoped>
-    
+@import "../assets/custom.scss";
 </style>

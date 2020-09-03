@@ -5,7 +5,7 @@
       <p class="col">Article du :{{article.releaseDate}}</p>
       <div class="row">
         <router-link
-          class="btn btn-primary mx-3"
+          class="btn btn-valid mx-3"
           :to="{ name: 'modifyingArticle', params: { id: article.id, list: articlesList }}"
         >Modifier</router-link>
         <b-input
@@ -44,7 +44,7 @@ export default {
       console.log(article)
       if (article.title == this.checkName) {
         let articleRef = db.database().ref('articles/' + article.id);
-        articleRef.remove();
+        articleRef.remove().then(window.location.reload());
       } else {
         alert("Entrez correctement le nom de l'article");
       }
@@ -54,4 +54,5 @@ export default {
 </script>
 
 <style scoped>
-</style> 
+@import "../assets/custom.scss";
+</style>

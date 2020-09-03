@@ -5,7 +5,7 @@
       <p class="col">Evénement du :{{event.releaseDate}}</p>
       <div class="row">
         <router-link
-          class="btn btn-primary mx-3"
+          class="btn btn-valid mx-3"
           :to="{ name: 'modifyingEvent', params: { id: event.id, list: eventsList }}"
         >Modifier</router-link>
         <b-input
@@ -44,7 +44,7 @@ export default {
       console.log(event)
       if (event.title == this.checkName) {
         let eventRef = db.database().ref('events/' + event.id);
-        eventRef.remove();
+        eventRef.remove().then(window.location.reload());
       } else {
         alert("Entrez correctement le nom de l'événement");
       }
@@ -54,4 +54,5 @@ export default {
 </script>
 
 <style scoped>
-</style> 
+@import "../assets/custom.scss";
+</style>
