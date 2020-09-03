@@ -27,7 +27,7 @@ export default {
     };
   },
   created() {
-    this.date = this.formatCompat(this.event.releaseDate);
+    
   },
   methods: {
     send: function () {
@@ -62,6 +62,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import "../assets/custom.scss";
 </style>

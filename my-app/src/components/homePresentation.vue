@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-card>
+    <b-card class="shadow">
       <b-row>
         <img src="../assets/img/hotelMagny.jpg" class="col-12" />
       </b-row>

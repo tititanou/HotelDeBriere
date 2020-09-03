@@ -26,7 +26,7 @@ export default {
     };
   },
   created() {
-    this.date = this.formatCompat(this.event.releaseDate);
+    
   },
   methods: {
     displayDate(date) {

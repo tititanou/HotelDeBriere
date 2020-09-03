@@ -82,7 +82,7 @@
             >
               <b-card-text>{{eventSelected[0].abstract}}</b-card-text>
 
-              <b-button href="#" variant="primary">Lire la suite</b-button>
+              <b-button class="btn-valid" href="#">Lire la suite</b-button>
             </b-card>
           </div>
           <div>
@@ -124,7 +124,7 @@
             </b-card>
           </div>
         </div>
-        <b-button class="mx-3 my-3" type="submit" variant="primary">Enregistrer la modification</b-button>
+        <b-button class="mx-3 my-3 btn-valid" type="submit" >Enregistrer la modification</b-button>
       </b-form>
 
       <b-card class="mt-3" header="Form Data Result">
@@ -133,12 +133,12 @@
     </div>
     <b-card class="mb-4" v-else-if="isConnected && !isAdmin">
       <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
-      <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+      <b-button class="btn-valid" href="/">Retour à l'acceuil</b-button>
     </b-card>
     <b-card class="mb-4" v-else>
       <p>Accès refusé! Vous devez vous connecter.</p>
-      <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
-      <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
+      <b-button class="btn-valid" href="/">Retour à l'acceuil</b-button>
+      <b-button class="btn-valid" href="inscriptionConnexion">Se connecter</b-button>
     </b-card>
   </div>
 </template>
@@ -291,4 +291,5 @@ img.preview {
 img.view {
   width: auto;
 }
+@import "../assets/custom.scss";
 </style>

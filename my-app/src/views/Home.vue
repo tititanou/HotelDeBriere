@@ -4,7 +4,18 @@
       <b-row lg="3" md="12" sm="12" class="mb-5 mx-auto">
         <homePresentation />
       </b-row>
-      <b-row>
+      <b-row class="row">
+        <h2>Evénements à venir :</h2>
+      </b-row>
+      <b-row class="mb-5" cols="1" cols-lg="2" cols-md="1" cols-sm="1">
+        <Event 
+            v-for="evnt in eventsList" 
+            :event="evnt" 
+            :key="evnt.id" 
+            :eventsList="eventsList" 
+        />
+      </b-row>
+      <b-row >
         <h2>Voici nos derniers articles !</h2>
       </b-row>
       <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1">
@@ -15,17 +26,7 @@
           :articlesList="articlesList"
         />
       </b-row>
-      <b-row class="row my-5">
-        <h1>Evénements à venir :</h1>
-      </b-row>
-      <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1">
-        <Event 
-            v-for="evnt in eventsList" 
-            :event="evnt" 
-            :key="evnt.id" 
-            :eventsList="eventsList" 
-        />
-      </b-row>
+      
     </b-container>
   </div>
 </template>

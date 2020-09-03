@@ -8,12 +8,12 @@
     </b-card>
      <b-card title="Liste des administrateurs" class="mb-4 " v-else-if="isConnected && !isAdmin">
             <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
-            <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
+            <b-button class="btn-valid" href="/">Retour à l'acceuil</b-button>
         </b-card>
         <b-card title="Liste des administrateurs" class="mb-4 " v-else>
             <p>Accès refusé! Vous devez vous connecter.</p>
-            <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
-            <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
+            <b-button class="btn-valid" href="/">Retour à l'acceuil</b-button>
+            <b-button class="btn-valid" href="inscriptionConnexion">Se connecter</b-button>
         </b-card>
 </template> 
 <script>
@@ -99,3 +99,7 @@ export default {
 
 }
 </script>
+
+<style scoped>
+@import "../assets/custom.scss";
+</style>

@@ -14,7 +14,7 @@
 
           <b-form-group label="Contenu de l'événement:">
             <b-form>
-              <vue-editor label="Contenu de l'événement:" required v-model="form.content"></vue-editor>
+              <vue-editor label="Contenu de l'événement:" required v-model="form.content" style="background-color: white;"></vue-editor>
             </b-form>
           </b-form-group>
 
@@ -111,8 +111,8 @@
               </b-card>
             </div>
           </div>
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="danger">Reset</b-button>
+          <b-button class="mt-3 btn-valid" type="submit">Enregistrer l'événement</b-button>
+          <b-button class="mx-5 mt-3" type="reset" variant="danger">Reset</b-button>
         </b-form>
 
         <!--<b-card class="mt-3" header="Form Data Result">
@@ -127,7 +127,7 @@
       <b-card class="mb-4" v-else>
         <p>Accès refusé! Vous devez vous connecter.</p>
         <b-button variant="primary" href="/">Retour à l'acceuil</b-button>
-        <b-button variant="primary" href="inscriptionConnexion">Se connecter</b-button>
+        <b-button class="mx-2" variant="primary" href="inscriptionConnexion">Se connecter</b-button>
       </b-card>
     </div>
   </b-container>
@@ -248,7 +248,7 @@ export default {
             media: this.form.media,
             is3DReal: this.form.is3DReal,
           })
-          .then(alert("Votre événement a été créé avec succès."));
+          .then(alert("Votre événement a été créé avec succès.")).then(window.location.reload());
       }
     },
     onReset(evt) {
@@ -324,10 +324,15 @@ export default {
 </script>
 
 <style scoped="">
+@import "../assets/custom.scss";
 img.preview {
   width: 200px;
 }
 img.view {
   width: auto;
+}
+.btn-valid{
+  background-color: rgb(97, 167, 140);
+  border-color: rgb(97, 167, 140);
 }
 </style>

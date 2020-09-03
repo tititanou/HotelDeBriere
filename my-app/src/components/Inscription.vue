@@ -10,7 +10,7 @@
                         <input type="password" id="password" name="password" class="form-control  col-8 " required v-model="form.password" placeholder="Choisissez votre mot de passe">
                         <label class="mt-3 col-4" for="confirmPassword">Mot de passe:</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" class="form-control  col-8 " v-model="form.confirmPassword" placeholder="Confirmez votre mot de passe">
-                        <b-button class="mt-3" type="submit" @click="inscription" variant="primary">S'inscrire</b-button>
+                        <b-button class="mt-3 btn-valid" type="submit" @click="inscription">S'inscrire</b-button>
                 </b-card-text>
                 
             </b-card>
@@ -61,5 +61,5 @@ export default{
 </script>
 
 <style scoped>
-     
+@import "../assets/custom.scss";
 </style>
