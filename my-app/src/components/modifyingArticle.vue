@@ -129,7 +129,7 @@
               img-height="max-height: 50rem"
               tag="article"
               style="max-width: 50rem;"
-              class="mb-4"
+              class="mb-4 bg-card "
             >
               <b-card-text>{{articleSelected[0].abstract}}</b-card-text>
 
@@ -443,4 +443,7 @@ img.view {
   width: auto;
 }
 
+.bg-card{
+	background-color: rgb(239, 241, 241);
+}
 </style>
