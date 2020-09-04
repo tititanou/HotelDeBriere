@@ -12,7 +12,10 @@
             <b-form-input v-model="form.subtitle" placeholder="Sous-titre"></b-form-input>
           </b-form-group>
 
-          <b-form-group label="Onglet:">
+          <b-form-group
+            label="Onglet:"
+            description="Appuyez sur entrée pour valider votre choix. Ne pas mettre d'apostrophe"
+          >
             <b-form-input
               placeholder="Ajouter un onglet en appuyant sur Entrée"
               list="tab-input-list"
@@ -30,7 +33,12 @@
             </div>
           </b-form-group>
 
-          <b-form-group label="Sous-Onglet:" description="facultatif">
+          <b-form-group></b-form-group>
+
+          <b-form-group
+            label="Sous-Onglet:"
+            description="Appuyez sur entrée pour valider votre choix. Ce choix reste facultatif. Ne pas mettre d'apostrophe"
+          >
             <b-form-input
               placeholder="Ajouter un sous-onglet en appuyant sur Entrée"
               list="subTab-input-list"
@@ -63,11 +71,11 @@
             </b-form>
           </b-form-group>
 
-          <b-form-group label="Date de mise en ligne:">
+          <b-form-group label="Date de mise en ligne:" >
             <b-form-datepicker v-model="form.releaseDate" required class="mb-2"></b-form-datepicker>
           </b-form-group>
 
-          <b-form-group label="Catégorie:">
+          <b-form-group label="Catégorie:" description="Appuyez sur entrée pour valider votre choix. Vous ne pouvez pas dépasser 3 catégories.">
             <b-form-input
               placeholder="Ajouter une catégorie en appuyant sur Entrée"
               list="input-list"
@@ -290,7 +298,7 @@ export default {
         snapshot.forEach(function (childSnapshot) {
           var childData = childSnapshot.val();
           if (childData != "") {
-            list.push(childData);
+            list.push(childData.subTab);
           }
         });
         console.log("la liste= " + list);
@@ -393,7 +401,8 @@ export default {
             media: this.form.media,
             is3DReal: this.form.is3DReal,
           })
-          .then(alert("Votre article a été créé avec succès.")).then(window.location.reload());
+          .then(alert("Votre article a été créé avec succès."))
+          .then(window.location.reload());
       }
     },
     onReset(evt) {
@@ -448,24 +457,23 @@ export default {
     addTag(tag) {
       if (tag != "") {
         if (this.form.tags.length < 3) {
-          let newTag = tag.toLowerCase();
-          this.form.tags.push(newTag);
+          this.form.tags.push(tag);
         }
       }
     },
     addTab(tab) {
       if (tab != "") {
         if (this.form.tabs.length < 1) {
-          let newTab = tab.toLowerCase();
-          this.form.tabs.push(newTab);
+          tab = tab.split("'").join(" ");
+          this.form.tabs.push(tab);
         }
       }
     },
     addSubTab(subTab) {
       if (subTab != "") {
         if (this.form.subTabs.length < 1) {
-          let newSubTab = subTab.toLowerCase();
-          this.form.subTabs.push(newSubTab);
+          subTab = subTab.split("'").join(" ");
+          this.form.subTabs.push(subTab);
         }
       }
     },
@@ -555,5 +563,4 @@ img.preview {
 img.view {
   width: auto;
 }
-
 </style>
