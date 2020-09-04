@@ -12,7 +12,7 @@
           <b-form-input v-model="articleSelected[0].subtitle" placeholder="Sous-titre"></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Onglet:">
+          <b-form-group label="Onglet:" description="Appuyez sur entrée pour valider votre choix.">
             <b-form-input
               placeholder="Ajouter un onglet en appuyant sur Entrée"
               list="tab-input-list"
@@ -20,32 +20,15 @@
               @keyup="handleTypingTab"
             ></b-form-input>
             <b-form-datalist id="tab-input-list" :options="propTabs"></b-form-datalist>
-            <div class="tags mt-2">
-              <div
-                v-for="(_tab, index) in articleTabs"
-                :key="index"
-                class="tag"
-                @click="removeTab(index)"
-              >{{ _tab }}</div>
-            </div>
           </b-form-group>
 
           <b-form-group label="Sous-Onglet:" description="facultatif">
             <b-form-input
-              placeholder="Ajouter un sous-onglet en appuyant sur Entrée"
+              placeholder="Sous-onglet"
               list="subTab-input-list"
               v-model="subTab"
-              @keyup="handleTypingSubTab"
             ></b-form-input>
             <b-form-datalist id="subTab-input-list" :options="propSubTabs"></b-form-datalist>
-            <div class="tags mt-2">
-              <div
-                v-for="(_subTab, index) in articleSubTabs"
-                :key="index"
-                class="tag"
-                @click="removeSubTab(index)"
-              >{{ _subTab }}</div>
-            </div>
           </b-form-group>
 
         <b-form-group label="Résumé:">
@@ -206,9 +189,9 @@
         <b-button class="mx-3 my-3 btn-valid" type="submit">Enregistrer la modification</b-button>
       </b-form>
 
-      <b-card class="mt-3" header="Form Data Result">
+      <!--<b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ articleSelected[0] }}</pre>
-      </b-card>
+      </b-card>-->
     </div>
     <b-card class="mb-4 " v-else-if="isConnected && !isAdmin">
       <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
@@ -245,8 +228,6 @@ export default {
       propSubTabs: [],
       show: true,
       articleTags: [],
-      articleTabs: [],
-      articleSubTabs: [],
       isConnected: false,
       isAdmin: false,
       user: '',
@@ -265,7 +246,6 @@ export default {
     this.articlesId = this.getIDfromURL();
     this.displayPropTags(this.propTags);
     this.displayPropTabs(this.propTabs);
-    console.log(this.articleTabs)
   },
   mounted: function () {
     let self = this;
@@ -281,8 +261,8 @@ export default {
             // Fill the local data property with Firebase data
             self.articleSelected = returnArr;
             self.articleTags = self.articleSelected[0].tags;
-            self.articleTabs = self.articleSelected[0].tab;
-            self.articleSubTabs = self.articleSelected[0].subTab;
+            self.tab = self.articleSelected[0].tab;
+            self.subTab = self.articleSelected[0].subTab;
           }
         });
       });
@@ -333,12 +313,12 @@ export default {
       console.log("coucou");
       let ref = firebase
         .database()
-        .ref("tabs/" + self.propsTabs[0] + "/subTab");
+        .ref("tabs/" + self.tab + "/subTab");
       ref.once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           var childData = childSnapshot.val();
           if (childData != "") {
-            list.push(childData);
+            list.push(childData.subTab);
           }
         });
         console.log("la liste= " + list);
@@ -382,6 +362,8 @@ export default {
           .set({
             title: this.articleSelected[0].title,
             subtitle: this.articleSelected[0].subtitle,
+            tab: this.tab,
+            subTab: this.subTab,
             abstract: this.articleSelected[0].abstract,
             content: this.articleSelected[0].content,
             releaseDate: this.articleSelected[0].releaseDate,
@@ -425,39 +407,11 @@ export default {
         }
       }
     },
-    addTab(tab) {
-      if (tab != "") {
-        if (this.articleTabs.length < 1) {
-          let newTab = tab;
-          this.articleTabs.push(newTab);
-        }
-      }
-    },
-    addSubTab(subTab) {
-      if (subTab != "") {
-        if (this.articleSubTabs.length < 1) {
-          let newSubTab = subTab;
-          this.articleSubTabs.push(newSubTab);
-        }
-      }
-    },
     removeTag(index) {
       this.articleTags.splice(index, 1);
     },
-    removeTab(index) {
-      this.articleTabs.splice(index, 1);
-    },
-    removeSubTab(index) {
-      this.articleSubTabs.splice(index, 1);
-    },
     tagExists(tag) {
       return this.articleTags.indexOf(tag) !== -1;
-    },
-    tabExists(tab) {
-      return this.articleTabs.indexOf(tab) !== -1;
-    },
-    subTabExists(subTab) {
-      return this.articleSubTabs.indexOf(subTab) !== -1;
     },
     handleTyping(e) {
       if (e.keyCode === 13) {
@@ -470,21 +424,8 @@ export default {
     },
     handleTypingTab(e) {
       if (e.keyCode === 13) {
-        let tab = this.tab.replace(/,/g, "");
-        if (!this.tabExists(tab)) {
-          this.addTab(tab);
-          this.tab = "";
-        }
-        this.displaySubTabs(this.propSubTabs);
-      }
-    },
-    handleTypingSubTab(e) {
-      if (e.keyCode === 13) {
-        let subTab = this.subTab.replace(/,/g, "");
-        if (!this.subTabExists(subTab)) {
-          this.addSubTab(subTab);
-          this.subTab = "";
-        }
+        this.propSubTabs = [];
+        this.displayPropSubTabs(this.propSubTabs);
       }
     },
   },
