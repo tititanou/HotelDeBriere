@@ -1,6 +1,6 @@
 <template>
   <div class="col justify-content-center my-3">
-    <b-card class="shadow container-fluid">
+    <b-card class="shadow container-fluid bg-card">
       <img :src="article.picture" class="col-12" />
       <h1>{{article.title}}</h1>
       <p>Article du {{this.displayDate(article.releaseDate)}}</p>
@@ -64,4 +64,7 @@ export default {
 
 <style>
 @import "../assets/custom.scss";
+.bg-card{
+	background-color: rgb(239, 241, 241);
+}
 </style>

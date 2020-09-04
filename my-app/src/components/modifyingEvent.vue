@@ -78,7 +78,7 @@
               img-height="max-height: 50rem"
               tag="article"
               style="max-width: 50rem;"
-              class="mb-4"
+              class="mb-4 bg-card"
             >
               <b-card-text>{{eventSelected[0].abstract}}</b-card-text>
 
@@ -87,7 +87,7 @@
           </div>
           <div>
             <h2>Page Complète:</h2>
-            <b-card>
+            <b-container class="border border-dark">
               <div
                 v-if="eventSelected[0].media && eventSelected[0].is3DReal == false"
                 class="mb-4 embed-responsive embed-responsive-16by9"
@@ -121,15 +121,15 @@
                 </div>
                 <div v-html="eventSelected[0].content"></div>
               </div>
-            </b-card>
+            </b-container>
           </div>
         </div>
         <b-button class="mx-3 my-3 btn-valid" type="submit" >Enregistrer la modification</b-button>
       </b-form>
 
-      <b-card class="mt-3" header="Form Data Result">
+      <!--<b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ eventSelected[0] }}</pre>
-      </b-card>
+      </b-card>-->
     </div>
     <b-card class="mb-4" v-else-if="isConnected && !isAdmin">
       <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
@@ -287,7 +287,9 @@ export default {
 img.preview {
   width: 200px;
 }
-
+.bg-card{
+	background-color: rgb(239, 241, 241);
+}
 img.view {
   width: auto;
 }

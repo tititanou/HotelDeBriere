@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-card class="shadow">
+    <b-card class="shadow bg-card">
       <b-row>
         <img src="../assets/img/hotelMagny.jpg" class="col-12" />
       </b-row>
@@ -21,4 +21,7 @@ export default {};
 
 <style scoped>
 @import "../assets/custom.scss";
+.bg-card{
+	background-color: rgb(239, 241, 241);
+}
 </style>

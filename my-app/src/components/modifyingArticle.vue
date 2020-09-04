@@ -22,7 +22,7 @@
             <b-form-datalist id="tab-input-list" :options="propTabs"></b-form-datalist>
           </b-form-group>
 
-          <b-form-group label="Sous-Onglet:" description="facultatif">
+          <b-form-group label="Sous-Onglet:" description="Ne pas entrer de sous-onglet si votre onglet principal est déjà instancié et ne comporte pas de sous-onglet. Ce choix reste facultatif.">
             <b-form-input
               placeholder="Sous-onglet"
               list="subTab-input-list"
@@ -138,7 +138,7 @@
           </div>
           <div>
             <h2>Page Complète:</h2>
-            <b-card>
+            <b-container class="border border-dark">
               <div
                 v-if="articleSelected[0].media && articleSelected[0].is3DReal == false"
                 class="mb-4 embed-responsive embed-responsive-16by9"
@@ -183,7 +183,7 @@
 
                 <div v-html="articleSelected[0].content"></div>
               </div>
-            </b-card>
+            </b-container>
           </div>
         </div>
         <b-button class="mx-3 my-3 btn-valid" type="submit">Enregistrer la modification</b-button>

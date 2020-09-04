@@ -63,7 +63,7 @@
                 img-height="max-height: 50rem"
                 tag="article"
                 style="max-width: 50rem;"
-                class="mb-4"
+                class="mb-4 bg-card"
               >
                 <b-card-text>
                   <h1>{{form.title}}</h1>
@@ -76,7 +76,7 @@
             <br />
             <div>
               <h2>Page Complète:</h2>
-              <b-card>
+              <b-container class="border border-dark">
                 <div
                   v-if="form.media && form.is3DReal == false"
                   class="mb-4 embed-responsive embed-responsive-16by9"
@@ -108,7 +108,7 @@
 
                   <div v-html="form.content"></div>
                 </div>
-              </b-card>
+              </b-container>
             </div>
           </div>
           <b-button class="mt-3 btn-valid" type="submit">Enregistrer l'événement</b-button>
@@ -334,5 +334,8 @@ img.view {
 .btn-valid{
   background-color: rgb(97, 167, 140);
   border-color: rgb(97, 167, 140);
+}
+.bg-card{
+	background-color: rgb(239, 241, 241);
 }
 </style>

@@ -27,7 +27,7 @@
 
           <b-form-group
             label="Sous-Onglet:"
-            description="Appuyez sur entrée pour valider votre choix. Ce choix reste facultatif. Ne pas mettre d'apostrophe"
+            description="Ne pas entrer de sous-onglet si votre onglet principal est déjà instancié et ne comporte pas de sous-onglet. Ce choix reste facultatif."
           >
             <b-form-input
               placeholder="Ajouter un sous-onglet en appuyant sur Entrée"
@@ -124,7 +124,7 @@
                 img-height="max-height: 50rem"
                 tag="article"
                 style="max-width: 50rem;"
-                class="mb-4"
+                class="mb-4 bg-card"
               >
                 <b-card-text>{{form.abstract}}</b-card-text>
 
@@ -133,7 +133,7 @@
             </div>
             <div>
               <h2>Page Complète:</h2>
-              <b-card>
+              <b-container class="border border-dark">
                 <div
                   v-if="form.media && form.is3DReal == false"
                   class="mb-4 embed-responsive embed-responsive-16by9"
@@ -170,7 +170,7 @@
 
                   <div v-html="form.content"></div>
                 </div>
-              </b-card>
+              </b-container>
             </div>
           </div>
           <b-button class="mt-3 btn-valid" type="submit">Submit</b-button>
@@ -442,12 +442,6 @@ export default {
     removeTag(index) {
       this.form.tags.splice(index, 1);
     },
-    removeTab(index) {
-      this.form.tabs.splice(index, 1);
-    },
-    removeSubTab(index) {
-      this.form.subTabs.splice(index, 1);
-    },
     tagExists(tag) {
       return this.form.tags.indexOf(tag) !== -1;
     },
@@ -467,7 +461,8 @@ export default {
       }
     },
     handleTypingTab(e) {
-      if (e.keyCode === 13) {      
+      if (e.keyCode === 13) {
+        this.propSubTabs = [];
         this.displaySubTabs(this.propSubTabs);
       }
     },
@@ -515,5 +510,8 @@ img.preview {
 }
 img.view {
   width: auto;
+}
+.bg-card{
+	background-color: rgb(239, 241, 241);
 }
 </style>

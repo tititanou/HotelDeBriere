@@ -1,6 +1,6 @@
 <template>
   <div class="col justify-content-center my-3">
-      <b-card class="shadow container-fluid">
+      <b-card class="shadow container-fluid bg-card">
         <img :src="event.picture" class="col-12">
         <h1>{{event.title}}</h1>
         <b-card-text>
@@ -60,4 +60,7 @@ export default {
 </script>
 <style scoped>
 @import "../assets/custom.scss";
+.bg-card{
+	background-color: rgb(239, 241, 241);
+}
 </style>
