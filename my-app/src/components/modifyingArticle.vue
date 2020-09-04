@@ -12,6 +12,25 @@
           <b-form-input v-model="articleSelected[0].subtitle" placeholder="Sous-titre"></b-form-input>
         </b-form-group>
 
+          <b-form-group label="Onglet:" description="Appuyez sur entrée pour valider votre choix.">
+            <b-form-input
+              placeholder="Ajouter un onglet en appuyant sur Entrée"
+              list="tab-input-list"
+              v-model="tab"
+              @keyup="handleTypingTab"
+            ></b-form-input>
+            <b-form-datalist id="tab-input-list" :options="propTabs"></b-form-datalist>
+          </b-form-group>
+
+          <b-form-group label="Sous-Onglet:" description="facultatif">
+            <b-form-input
+              placeholder="Sous-onglet"
+              list="subTab-input-list"
+              v-model="subTab"
+            ></b-form-input>
+            <b-form-datalist id="subTab-input-list" :options="propSubTabs"></b-form-datalist>
+          </b-form-group>
+
         <b-form-group label="Résumé:">
           <b-form-textarea
             v-model="articleSelected[0].abstract"
@@ -170,9 +189,9 @@
         <b-button class="mx-3 my-3 btn-valid" type="submit">Enregistrer la modification</b-button>
       </b-form>
 
-      <b-card class="mt-3" header="Form Data Result">
+      <!--<b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ articleSelected[0] }}</pre>
-      </b-card>
+      </b-card>-->
     </div>
     <b-card class="mb-4 " v-else-if="isConnected && !isAdmin">
       <p>Accès refusé! Vous devez être administrateur pour accéder au contenu de cette page.</p>
@@ -203,6 +222,10 @@ export default {
       articleSelected: [],
       tag: "",
       propTags: [],
+      tab: "",
+      propTabs: [],
+      subTab: "",
+      propSubTabs: [],
       show: true,
       articleTags: [],
       isConnected: false,
@@ -222,6 +245,7 @@ export default {
     }
     this.articlesId = this.getIDfromURL();
     this.displayPropTags(this.propTags);
+    this.displayPropTabs(this.propTabs);
   },
   mounted: function () {
     let self = this;
@@ -237,10 +261,13 @@ export default {
             // Fill the local data property with Firebase data
             self.articleSelected = returnArr;
             self.articleTags = self.articleSelected[0].tags;
+            self.tab = self.articleSelected[0].tab;
+            self.subTab = self.articleSelected[0].subTab;
           }
         });
       });
       self.user = firebase.auth().currentUser;
+      console.log(self.user)
       const usersRef = firebase.database().ref("users");
       usersRef.on("value", snapshot => {
           let data = snapshot.val();
@@ -271,6 +298,32 @@ export default {
           list.push(childKey);
         });
       });
+    },
+    displayPropTabs(list) {
+      let ref = firebase.database().ref("tabs");
+      ref.once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childKey = childSnapshot.key;
+          list.push(childKey);
+        });
+      });
+    },
+    displayPropSubTabs(list) {
+      let self = this;
+      console.log("coucou");
+      let ref = firebase
+        .database()
+        .ref("tabs/" + self.tab + "/subTab");
+      ref.once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childData = childSnapshot.val();
+          if (childData != "") {
+            list.push(childData.subTab);
+          }
+        });
+        console.log("la liste= " + list);
+      });
+      console.log(list.length + " et la liste est " + list);
     },
     getIDfromURL: function () {
       return window.location.pathname.split("modifyingArticle")[1];
@@ -309,6 +362,8 @@ export default {
           .set({
             title: this.articleSelected[0].title,
             subtitle: this.articleSelected[0].subtitle,
+            tab: this.tab,
+            subTab: this.subTab,
             abstract: this.articleSelected[0].abstract,
             content: this.articleSelected[0].content,
             releaseDate: this.articleSelected[0].releaseDate,
@@ -365,6 +420,12 @@ export default {
           this.addTag(tag);
           this.tag = "";
         }
+      }
+    },
+    handleTypingTab(e) {
+      if (e.keyCode === 13) {
+        this.propSubTabs = [];
+        this.displayPropSubTabs(this.propSubTabs);
       }
     },
   },
