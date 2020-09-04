@@ -1,34 +1,36 @@
 <template>
   <div class="mt-5">
     <b-container>
-      <b-row lg="3" md="12" sm="12" class="mb-5 mx-auto">
-        <homePresentation />
-      </b-row>
-      <b-row class="row">
-        <h2>Evénements à venir :</h2>
-      </b-row>
-      <b-row class="mb-5" cols="1" cols-lg="2" cols-md="1" cols-sm="1">
-        <Event 
-            v-for="evnt in eventsList" 
-            :event="evnt" 
-            :key="evnt.id" 
-            :eventsList="eventsList" 
-        />
-      </b-row>
-      <b-row >
+      <b-row>
+        <b-col lg="4" md="12" sm="12" class="mb-5">
+          <homePresentation />
+        </b-col>
+        <b-col lg="8" md="12" sm="12">
+          <h2>Evénements à venir :</h2>
+          <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1" class="mb-5 ml-auto">
+            <Event
+              class="my-3"
+              v-for="evnt in eventsList"
+              :event="evnt"
+              :key="evnt.id"
+              :eventsList="eventsList"
+            />
+          </b-row>
+        </b-col>
+
         <h2>Voici nos derniers articles !</h2>
+        <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1" class="my-5">
+          <Article
+            v-for="articleI in articlesList"
+            :article="articleI"
+            :key="articleI.id"
+            :articlesList="articlesList"
+          />
+        </b-row>
       </b-row>
-      <b-row cols="1" cols-lg="2" cols-md="1" cols-sm="1">
-        <Article
-          v-for="art in articlesList"
-          :article="art"
-          :key="art.id"
-          :articlesList="articlesList"
-        />
-      </b-row>
-      
     </b-container>
   </div>
+  
 </template>
 
 <script>

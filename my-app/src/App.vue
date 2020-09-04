@@ -27,6 +27,7 @@ import Footer from "@/components/Footer.vue";
   @import "./assets/custom.scss";
   @import "../node_modules/bootstrap/scss/bootstrap.scss";
   body{
-    background-color: rgb(239, 241, 241);
+    background-color: #E7F4ED;
+    //background-color: rgb(239, 241, 241);
   }
 </style>
