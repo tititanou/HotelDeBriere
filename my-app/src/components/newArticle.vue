@@ -12,28 +12,18 @@
             <b-form-input v-model="form.subtitle" placeholder="Sous-titre"></b-form-input>
           </b-form-group>
 
-          <b-form-group
-            label="Onglet:"
-            description="Appuyez sur entrée pour valider votre choix. Ne pas mettre d'apostrophe"
-          >
+          <b-form-group label="Onglet:" description="Appuyez sur entrée pour valider votre choix.">
             <b-form-input
-              placeholder="Ajouter un onglet en appuyant sur Entrée"
+              placeholder="Ajouter un onglet"
               list="tab-input-list"
-              v-model="tab"
+              v-model="form.tab"
               @keyup="handleTypingTab"
             ></b-form-input>
             <b-form-datalist id="tab-input-list" :options="propTabs"></b-form-datalist>
-            <div class="tags mt-2">
-              <div
-                v-for="(_tab, index) in form.tabs"
-                :key="index"
-                class="tag"
-                @click="removeTab(index)"
-              >{{ _tab }}</div>
-            </div>
+            
           </b-form-group>
 
-          <b-form-group></b-form-group>
+          
 
           <b-form-group
             label="Sous-Onglet:"
@@ -42,18 +32,9 @@
             <b-form-input
               placeholder="Ajouter un sous-onglet en appuyant sur Entrée"
               list="subTab-input-list"
-              v-model="subTab"
-              @keyup="handleTypingSubTab"
+              v-model="form.subTab"
             ></b-form-input>
             <b-form-datalist id="subTab-input-list" :options="propSubTabs"></b-form-datalist>
-            <div class="tags mt-2">
-              <div
-                v-for="(_subTab, index) in form.subTabs"
-                :key="index"
-                class="tag"
-                @click="removeSubTab(index)"
-              >{{ _subTab }}</div>
-            </div>
           </b-form-group>
 
           <b-form-group label="Résumé:">
@@ -239,8 +220,8 @@ export default {
       form: {
         title: "",
         subtitle: "",
-        tabs: [],
-        subTabs: [],
+        tab: "",
+        subTab: "",
         abstract: "",
         content: "",
         releaseDate: "",
@@ -249,10 +230,8 @@ export default {
         picture: "",
         media: "",
         is3DReal: false,
-      },
-      tab: "",
+      }, 
       propTabs: [],
-      subTab: "",
       propSubTabs: [],
       tag: "",
       propTags: [],
@@ -293,7 +272,7 @@ export default {
       console.log("coucou");
       let ref = firebase
         .database()
-        .ref("tabs/" + self.form.tabs[0] + "/subTab");
+        .ref("tabs/" + self.form.tab + "/subTab");
       ref.once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           var childData = childSnapshot.val();
@@ -307,6 +286,8 @@ export default {
     },
     onSubmit(evt) {
       evt.preventDefault();
+      let subTabsList = []
+      this.form.tab =  this.form.tab.split("'").join(" ");
       //alert(JSON.stringify(this.form))
       if (this.form.abstract.length == 0 || this.form.abstract.length > 280) {
         alert("Vous devez écrire un résumé de 280 caractères maximum.");
@@ -318,23 +299,23 @@ export default {
         alert("Vous devez entrer une image.");
       } else if (this.form.tags.length == 0) {
         alert("Vous devez entrer au moins une catégorie.");
-      } else if (this.form.tabs.length == 0) {
+      } else if (!this.form.tab) {
         alert("Vous devez entrer un onglet.");
       } else {
-        let subTabsList = [];
+        
         if (this.propSubTabs != []) {
           subTabsList = this.propSubTabs;
         }
-        console.log("liste subTab 1= " + this.form.subTabs[0]);
-        if (this.form.subTabs[0] != undefined) {
-          subTabsList.push(this.form.subTabs[0]);
+        console.log("liste subTab 1= " + this.form.subTab);
+        if (this.form.subTab != undefined) {
+          subTabsList.push(this.form.subTab);
         }
         console.log(subTabsList);
         firebase
           .database()
-          .ref("tabs/" + this.form.tabs[0])
+          .ref("tabs/" + this.form.tab)
           .set({
-            tab: this.form.tabs[0],
+            tab: this.form.tab,
           });
         if (subTabsList.length > 0) {
           for (let i = 0; i < subTabsList.length; i++) {
@@ -343,7 +324,7 @@ export default {
               console.log("problem???");
               firebase
                 .database()
-                .ref("tabs/" + this.form.tabs[0] + "/subTab/" + subTabsList[i])
+                .ref("tabs/" + this.form.tab + "/subTab/" + subTabsList[i])
                 .set({
                   subTab: subTabsList[i],
                 });
@@ -358,40 +339,21 @@ export default {
               tag: this.form.tags[i],
             });
         }
-        let subTabArt = "";
-        if (this.form.subTabs[0] != undefined) {
-          console.log("holaaa" + this.form.subTabs[0]);
-          subTabArt = this.form.subTabs[0];
-        }
+        //let subTabArt = "";
+        //if (this.form.subTab != undefined) {
+          //console.log("holaaa" + this.form.subTab);
+          //subTabArt = this.form.subTab;
+        //}
 
         console.log(this.form.content.length);
-        if (this.form.tabs[0].toLowerCase() != "articles") {
-          firebase
-            .database()
-            .ref(this.form.tabs[0] + "/")
-            .push({
-              title: this.form.title,
-              subtitle: this.form.subtitle,
-              tab: this.form.tabs[0],
-              subTab: subTabArt,
-              abstract: this.form.abstract,
-              content: this.form.content,
-              releaseDate: this.form.releaseDate,
-              autor: this.form.autor,
-              tags: this.form.tags,
-              picture: this.form.picture,
-              media: this.form.media,
-              is3DReal: this.form.is3DReal,
-            });
-        }
         firebase
           .database()
           .ref("articles/")
           .push({
             title: this.form.title,
             subtitle: this.form.subtitle,
-            tab: this.form.tabs[0],
-            subTab: subTabArt,
+            tab: this.form.tab,
+            subTab: this.form.subTab,
             abstract: this.form.abstract,
             content: this.form.content,
             releaseDate: this.form.releaseDate,
@@ -410,8 +372,8 @@ export default {
       // Reset our form values
       this.form.title = "";
       this.form.subtitle = "";
-      this.form.tabs = [];
-      this.form.subTabs = [];
+      this.form.tab = "";
+      this.form.subTab = "";
       this.form.abstract = "";
       this.form.content = "";
       this.form.releaseDate = "";
@@ -461,7 +423,7 @@ export default {
         }
       }
     },
-    addTab(tab) {
+    /*addTab(tab) {
       if (tab != "") {
         if (this.form.tabs.length < 1) {
           tab = tab.split("'").join(" ");
@@ -476,7 +438,7 @@ export default {
           this.form.subTabs.push(subTab);
         }
       }
-    },
+    },*/
     removeTag(index) {
       this.form.tags.splice(index, 1);
     },
@@ -489,12 +451,12 @@ export default {
     tagExists(tag) {
       return this.form.tags.indexOf(tag) !== -1;
     },
-    tabExists(tab) {
+    /*tabExists(tab) {
       return this.form.tabs.indexOf(tab) !== -1;
     },
     subTabExists(subTab) {
       return this.form.subTabs.indexOf(subTab) !== -1;
-    },
+    },*/
     handleTyping(e) {
       if (e.keyCode === 13) {
         let tag = this.tag.replace(/,/g, "");
@@ -505,16 +467,11 @@ export default {
       }
     },
     handleTypingTab(e) {
-      if (e.keyCode === 13) {
-        let tab = this.tab.replace(/,/g, "");
-        if (!this.tabExists(tab)) {
-          this.addTab(tab);
-          this.tab = "";
-        }
+      if (e.keyCode === 13) {      
         this.displaySubTabs(this.propSubTabs);
       }
     },
-    handleTypingSubTab(e) {
+    /*handleTypingSubTab(e) {
       if (e.keyCode === 13) {
         let subTab = this.subTab.replace(/,/g, "");
         if (!this.subTabExists(subTab)) {
@@ -522,11 +479,7 @@ export default {
           this.subTab = "";
         }
       }
-    },
-    createArticle() {
-      //var user = firebase.auth().currentUser;
-      //console.log(user.uid);
-    },
+    },*/
   },
   mounted() {
     let viewUser = this;
