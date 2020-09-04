@@ -22,6 +22,9 @@
 	}
 }
 
+
+
+
 header, footer{
     background-color: #5D9A6A;
     background-size: cover;
@@ -37,4 +40,12 @@ header, footer{
 .card-img-top {
     width: 100%;
     object-fit: cover;
+}
+
+@media screen and (max-width:1122px){
+	#test{
+		width: 100%;
+	min-width: 100%;
+	margin-left: 0 !important;
+	}
 }
