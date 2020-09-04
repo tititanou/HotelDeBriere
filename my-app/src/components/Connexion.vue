@@ -25,6 +25,7 @@ export default{
                 email: "",
                 password: "",
             },
+            isConnected: false,
             error: null
         };
     },
@@ -32,8 +33,10 @@ export default{
         connexion() {
             firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
             .then(()=>{
-                alert("Vous êtes connecté.")
-                this.$router.replace({ name: "profile" })
+                alert("Vous êtes connecté.");
+                this.$router.replace({ name: "profile" });
+                window.location.reload();
+
             })
             .catch(function(err) {
                 alert("Une erreur s'est produite")

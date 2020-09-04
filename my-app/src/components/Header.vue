@@ -22,7 +22,7 @@
               </template>
               <b-dropdown-item v-if="isConnected" href="profil">Profil</b-dropdown-item>
               <b-dropdown-item v-if="!isConnected" href="inscriptionConnexion">Se connecter</b-dropdown-item>
-              <b-dropdown-item v-on:click="signOutUser" href="/">Déconnexion</b-dropdown-item>
+              <b-dropdown-item v-if="isConnected" v-on:click="signOutUser" href="/">Déconnexion</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
@@ -103,10 +103,12 @@ export default {
         .signOut()
         .then(function () {
           alert("Vous êtes déconnecté. A bientôt");
+          this.$router.replace({ name: "home" });
+          window.location.reload();
         })
         .catch(function (error) {
           console.log(error.message);
-          alert("Une erreur s'est produite. Vous n'êtes pas déconnecté.");
+          //alert("Une erreur s'est produite. Vous n'êtes pas déconnecté.");
         });
     },
   },
