@@ -307,7 +307,7 @@ export default {
           subTabsList = this.propSubTabs;
         }
         console.log("liste subTab 1= " + this.form.subTab);
-        if (this.form.subTab != undefined) {
+        if (this.form.subTab != '') {
           subTabsList.push(this.form.subTab);
         }
         console.log(subTabsList);
