@@ -18,6 +18,7 @@ import ChoosenEvent from "@/views/ChoosenEvent";
 import ModifyingEvent from "@/views/ModifyingEvent";
 import EditEvent from "@/views/EditEvent";
 import MoreAbout from "@/views/MoreAbout.vue";
+import FilteredArticles from "@/views/FilteredArticles.vue";
 import "firebase/auth";
 
 Vue.use(VueRouter)
@@ -81,7 +82,8 @@ const routes = [{
 },
 {
     path: '*',
-    redirect: { name: '404' }
+    name: 'filteredArticles',
+    component: FilteredArticles,
 },
 {
     path: '/newArticle',

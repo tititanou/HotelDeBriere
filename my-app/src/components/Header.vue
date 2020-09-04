@@ -7,25 +7,11 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav v-html="this.displayMenu()">
-            <!--<b-navbar-nav>
-            <b-nav-item-dropdown text="L'association" right>
-              <b-dropdown-item href="#">Présentation</b-dropdown-item>
-              <b-dropdown-item href="#">Son histoire</b-dropdown-item>
-              <b-dropdown-item href="#">Nous joindre</b-dropdown-item>
-              <b-dropdown-item href="#">Partenaires</b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item-dropdown text="Le projet" right>
-              <b-dropdown-item href="#">L'emergence</b-dropdown-item>
-              <b-dropdown-item href="#">La convention</b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item href="#">La phase d'amorçage</b-nav-item>
-            <b-nav-item href="#">Le chantier</b-nav-item>
+          <b-navbar-nav>
             <b-nav-item href="events">Evenements</b-nav-item>
             <b-nav-item href="articles">On en parle</b-nav-item>
-            <b-nav-item href="#">Ressources</b-nav-item>
-            <b-nav-item href="admin">Administration</b-nav-item>-->
           </b-navbar-nav>
+          <b-navbar-nav v-html="this.displayMenu()"></b-navbar-nav>
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
@@ -66,13 +52,6 @@ export default {
     this.displayMenu();
   },
   methods: {
-    /*
-    
-    stop le CZ
-    
-
-    
-    */
     displayMenu() {
       let menuContent = "";
       for (let i = 0; i < this.menu.length; i++) {
@@ -84,22 +63,22 @@ export default {
             this.menu[i].tab +
             "</span></a><ul tabindex='-1' class='dropdown-menu dropdown-menu-right'>";
 
-          for (const subTabitem in this.menu[i].subTab) { 
+          for (const subTabitem in this.menu[i].subTab) {
             console.log("voila : " + `${subTabitem}`);
             menuContent =
               menuContent +
-              "<li role='presentation'><a role='menuitem' href='" +
+              "<li role='presentation'><a role='menuitem' href='KTA" +
               `${subTabitem}` +
               "' target='_self' class='dropdown-item'>" +
               `${subTabitem}` +
               " </a></li>";
           }
-         
+
           menuContent = menuContent + "</ul></li>";
         } else {
           menuContent =
             menuContent +
-            "<li class='nav-item'><a href='" +
+            "<li class='nav-item'><a href='KTA" +
             this.menu[i].tab +
             "' target='_self' class='nav-link'>" +
             this.menu[i].tab +
